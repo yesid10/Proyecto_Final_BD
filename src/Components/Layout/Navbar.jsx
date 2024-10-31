@@ -11,18 +11,16 @@ import { FaSearch } from "react-icons/fa";
 import { GoHeart } from "react-icons/go";
 import { FaUserAlt } from "react-icons/fa";
 import { CiShoppingCart } from "react-icons/ci";
+import { IoMenu } from "react-icons/io5";
+import { MdOutlineArrowDropDown } from "react-icons/md";
+import { CiMenuFries } from "react-icons/ci";
 
 const Navbar = () => {
 
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState();
 
-  const navigation = [
-    { id: 1, name: 'Productos', href: 'products', current: true },
-    { id: 2, name: 'Team', href: '#', current: false },
-    { id: 3, name: 'Projects', href: '#', current: false },
-    { id: 4, name: 'Calendar', href: '#', current: false },
-  ]
+  
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -39,6 +37,34 @@ const Navbar = () => {
     }
 
   }
+
+  const navigationPages = [
+    {
+      id: 1,
+      icon: <CiMenuFries />,
+      page: "COLECCIONES"
+    },
+    {
+      id: 2,
+      page: "HOME",
+      icon: <MdOutlineArrowDropDown />
+    },
+    {
+      id: 3,
+      page: "MENU",
+      icon: <MdOutlineArrowDropDown />
+    },
+    {
+      id: 4,
+      page: "CARRITO",
+      icon: <MdOutlineArrowDropDown />
+    },
+    {
+      id: 5,
+      page: "CONTACTO",
+      icon: <MdOutlineArrowDropDown />
+    }
+  ];
 
   return (
     <div>
@@ -59,8 +85,8 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className='flex justify-around items-center my-7'>
-        <div class="flex sm:hidden items-center justify-center">
+      <div className='flex justify-center gap-[5%] items-center my-7'>
+        <div class="flex sm:hidden items-center justify-start">
           <div class="group flex h-20 w-20 cursor-pointer items-center justify-center rounded-3xl bg-white p-2 hover:bg-slate-200">
             <div class="space-y-2">
               <span class="block h-1 w-10 origin-center rounded-full bg-primary_color transition-transform ease-in-out group-hover:translate-y-1.5 group-hover:rotate-45"></span>
@@ -99,6 +125,21 @@ const Navbar = () => {
             <span className='sm:flex hidden '>$0.00 COP</span>
           </div>
         </div>
+      </div>
+
+      <div className='sm:flex hidden bg-secondary_color text-white py-5'>
+        <ul className='flex w-screen font-semibold justify-center gap-[5%]'>
+          {
+            navigationPages.map(item => (
+              <li className='flex hover:text-primary_color transition-all justify-center items-center text-white gap-4 cursor-pointer' key={item.id}>
+                {item.page}
+                {item.icon}
+              </li>
+            ))
+          }
+         
+        </ul>
+
       </div>
 
 
