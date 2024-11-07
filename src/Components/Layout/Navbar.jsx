@@ -94,12 +94,12 @@ const Navbar = () => {
       </div>
 
       <div className="flex justify-center gap-[10%] items-center my-7">
-        <div class="flex sm:hidden items-center justify-start">
-          <div class="group flex h-20 w-20 cursor-pointer items-center justify-center rounded-3xl bg-white p-2 hover:bg-slate-200">
-            <div class="space-y-2">
-              <span class="block h-1 w-10 origin-center rounded-full bg-primary_color transition-transform ease-in-out group-hover:translate-y-1.5 group-hover:rotate-45"></span>
-              <span class="block h-1 w-8 origin-center rounded-full bg-secondary_color transition-transform ease-in-out group-hover:w-10 group-hover:-translate-y-1.5 group-hover:-rotate-45"></span>
-              <span class="block h-1 w-6 origin-center rounded-full bg-primary_color transition-transform ease-in-out group-hover:hidden"></span>
+        <div className="flex sm:hidden items-center justify-start">
+          <div className="group flex h-20 w-20 cursor-pointer items-center justify-center rounded-3xl bg-white p-2 hover:bg-slate-200">
+            <div className="space-y-2">
+              <span className="block h-1 w-10 origin-center rounded-full bg-primary_color transition-transform ease-in-out group-hover:translate-y-1.5 group-hover:rotate-45"></span>
+              <span className="block h-1 w-8 origin-center rounded-full bg-secondary_color transition-transform ease-in-out group-hover:w-10 group-hover:-translate-y-1.5 group-hover:-rotate-45"></span>
+              <span className="block h-1 w-6 origin-center rounded-full bg-primary_color transition-transform ease-in-out group-hover:hidden"></span>
             </div>
           </div>
         </div>
@@ -108,7 +108,7 @@ const Navbar = () => {
           <figure>
             <img
               src="https://digital-world-4.myshopify.com/cdn/shop/files/logo_digital_new_250x.png?v=1613156859"
-              alt=""
+              alt="logo"
             />
           </figure>
           <div className="flex">
@@ -157,8 +157,6 @@ const Navbar = () => {
           ))}
         </ul>
       </div>
-
-      <Outlet />
     </div>
   );
 };

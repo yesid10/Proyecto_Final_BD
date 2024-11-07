@@ -1,14 +1,14 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Navbar from '../Components/Layout/Navbar'
 import Home from '../Components/Home/Home'
 import Products from '../Components/products/Products'
+import LayoutComponent from '../Components/Layout/LayoutComponent'
 
 const AppRouter = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route element={<Navbar/>}>
+                <Route element={<LayoutComponent/>}>
                     <Route path='/' element={<Home/>}></Route>
                     <Route path='/products' element={<Products/>}/>
                 </Route>

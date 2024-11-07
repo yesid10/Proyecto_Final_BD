@@ -1,17 +1,19 @@
-/** @type {import('tailwindcss').Config} */
-export default {
+import withMT from "@material-tailwind/react/utils/withMT";
+
+export default withMT({
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
-      colors:{
+      colors: {
         primary_color: '#85c227',
-        secondary_color: '#191919'
-      }
+        secondary_color: '#191919',
+      },
     },
   },
-  plugins: [],
-}
-
+  plugins: [
+    // Asegúrate de incluir los plugins de Material Tailwind si es necesario
+  ],
+});
