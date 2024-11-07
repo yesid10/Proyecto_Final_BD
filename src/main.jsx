@@ -5,10 +5,11 @@ import AppRouter from './routes/AppRouter.jsx'
 import { ThemeProvider } from "@material-tailwind/react";
 
 
-createRoot(document.getElementById('root')).render(
+const root = createRoot(document.getElementById('root'));
+root.render(
   <StrictMode>
     <ThemeProvider>
       <AppRouter />
     </ThemeProvider>
-  </StrictMode>,
+  </StrictMode>
 )

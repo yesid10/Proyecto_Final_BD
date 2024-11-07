@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-} from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 import { FaFacebookF } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa6";
@@ -19,7 +9,6 @@ import { FaSearch } from "react-icons/fa";
 import { GoHeart } from "react-icons/go";
 import { FaUserAlt } from "react-icons/fa";
 import { CiShoppingCart } from "react-icons/ci";
-import { IoMenu } from "react-icons/io5";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { CiMenuFries } from "react-icons/ci";
 
