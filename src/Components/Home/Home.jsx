@@ -57,9 +57,9 @@ const Home = () => {
         </div>
 
         <div
-          className="h-full flex justify-center gap-10  items-center w-full bg-no-repeat bg-[length:2000px] bg-[url(//digital-world-4.myshopify.com/cdn/shop/files/slideshow2-home4_1920x.jpg?v=1613501343)]">
+          className="h-full flex justify-center gap-10 group items-center w-full bg-no-repeat bg-[length:2000px] bg-[url(//digital-world-4.myshopify.com/cdn/shop/files/slideshow2-home4_1920x.jpg?v=1613501343)]">
           <img
-            className="w-4/12 mr-5 ml-20"
+            className="w-4/12 mr-5 ml-20 group-hover:scale-125 transition-all duration-500"
             src="https://digital-world-4.myshopify.com/cdn/shop/files/slideshow1-img-home4_600x.png?v=1613156855"
             alt=""
           />
