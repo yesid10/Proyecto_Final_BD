@@ -7,7 +7,7 @@ import { ThemeProvider } from '@material-tailwind/react'
 
 const AppRouter = () => {
     return (
-        <BrowserRouter>
+        <BrowserRouter future={{v7_relativeSplatPath: true}}>
             <Routes>
                 <Route element={<LayoutComponent />}>
                     <Route path='/' element={<Home />}></Route>
