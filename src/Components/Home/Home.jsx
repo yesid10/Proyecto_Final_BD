@@ -11,6 +11,7 @@ import { IoIosLaptop } from "react-icons/io";
 import { TfiHeadphoneAlt } from "react-icons/tfi";
 import { BsCamera } from "react-icons/bs";
 import { IoTvOutline } from "react-icons/io5";
+import Elements from "./typesElements/Elements";
 
 
 
@@ -139,6 +140,7 @@ const Home = () => {
           ))
         }
       </div>
+      <Elements/>
 
     </div>
   );
