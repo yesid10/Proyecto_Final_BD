@@ -2,14 +2,56 @@ import React from "react";
 import {
   Carousel,
   Typography,
-  Button,
-  IconButton,
+  Button
 } from "@material-tailwind/react";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { GiSmartphone } from "react-icons/gi";
+import { IoIosTabletPortrait } from "react-icons/io";
+import { IoIosLaptop } from "react-icons/io";
+import { TfiHeadphoneAlt } from "react-icons/tfi";
+import { BsCamera } from "react-icons/bs";
+import { IoTvOutline } from "react-icons/io5";
+
+
 
 const Home = () => {
+
+  const elements = [
+    {
+      id: 1,
+      name: 'Smartphone',
+      icon: <GiSmartphone className="text-2xl" />
+    },
+    {
+      id: 2,
+      name: 'Tablet',
+      icon: <IoIosTabletPortrait className="text-2xl"/>
+    },
+    {
+      id: 3,
+      name: 'Laptop',
+      icon: <IoIosLaptop className="text-2xl"/>
+    },
+    {
+      id: 4,
+      name: 'Accesorios',
+      icon: <TfiHeadphoneAlt className="text-2xl"/>
+    },
+    {
+      id: 5,
+      name: 'Cámara',
+      icon: <BsCamera className="text-2xl" />
+    },
+    {
+      id: 6,
+      name: 'TV',
+      icon: <IoTvOutline className="text-2xl"/>
+    }
+  ]
+
   return (
-    <div className="flex  items-center justify-center mt-4">
+    <div className="flex flex-col items-center justify-center mt-4">
+      {/* Carousel */}
       <Carousel
         loop="true"
         autoplay="true"
@@ -18,14 +60,14 @@ const Home = () => {
         prevArrow={({ handlePrev }) => (
           <GrFormPrevious
             onClick={handlePrev}
-            className="text-3xl text-gray-300  w-[3.5%] h-[5.5%] !absolute  rounded-md bg-opacity-80
+            className="text-3xl text-gray-300  w-[3.5%] h-[6%] !absolute  rounded-md bg-opacity-80
              bg-secondary_color top-2/4 left-4 -translate-y-2/4 opacity-0 group-hover:opacity-100 transition-opacity"
           />
         )}
         nextArrow={({ handleNext }) => (
           <GrFormNext
             onClick={handleNext}
-            className="!absolute text-3xl w-[3.5%] h-[5.5%] text-gray-300 rounded-md bg-secondary_color bg-opacity-80
+            className="!absolute text-3xl w-[3.5%] h-[6%] text-gray-300 rounded-md bg-secondary_color bg-opacity-80
              top-2/4 !right-4 -translate-y-2/4  opacity-0 group-hover:opacity-100 transition-opacity"
           />
         )}
@@ -81,6 +123,23 @@ const Home = () => {
           </div>
         </div>
       </Carousel>
+
+      {/*Componente de tipo de elemento tecnologico */}
+
+      <div className=" flex mt-5 mb-5 pt-5 pb-5 w-9/12 rounded-lg gap-[6%] hover:drop-shadow-xl transition-all duration-300 justify-center flex-wrap bg-gray-200">
+        {
+          elements.map((element) => (
+            <div key={element.id} className="group flex flex-col items-center cursor-pointer">
+              <div className="flex items-center flex-col">
+                <span className="opacity-50 group-hover:opacity-100 transition-all">{element.icon}</span>
+                <p className="font-light opacity-80 group-hover:opacity-100 transition-all">{element.name}</p>
+              </div>
+            
+            </div>
+          ))
+        }
+      </div>
+
     </div>
   );
 };
