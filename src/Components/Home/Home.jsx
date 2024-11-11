@@ -51,7 +51,7 @@ const Home = () => {
   ]
 
   return (
-    <div className="flex flex-col items-center justify-center mt-4">
+    <div className="flex flex-col items-center justify-center mt-4 ">
       {/* Carousel */}
       <Carousel
         loop="true"
@@ -133,7 +133,7 @@ const Home = () => {
             <div key={element.id} className="group flex flex-col items-center cursor-pointer">
               <div className="flex items-center flex-col">
                 <span className="opacity-50 group-hover:opacity-100 transition-all">{element.icon}</span>
-                <p className="font-light opacity-80 group-hover:opacity-100 transition-all">{element.name}</p>
+                <p className="font-light opacity-80 group-hover:opacity-100 transition-all text-sm">{element.name}</p>
               </div>
             
             </div>

@@ -137,7 +137,7 @@ const Navbar = () => {
         <ul className="flex w-screen font-semibold justify-center gap-[9.5%]">
           {navigationPages.map((item) => (
             <li
-              className="flex hover:text-primary_color transition-all justify-center items-center text-white gap-4 cursor-pointer"
+              className="flex text-sm font-light hover:text-primary_color transition-all justify-center items-center text-white gap-4 cursor-pointer"
               key={item.id}
             >
               {item.page}
