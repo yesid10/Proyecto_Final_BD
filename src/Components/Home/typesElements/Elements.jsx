@@ -1,6 +1,7 @@
 import React from "react";
 import { PiLaptop } from "react-icons/pi";
 
+
 const Elements = () => {
   const marcas = [
     {
@@ -62,7 +63,7 @@ const Elements = () => {
           <PiLaptop className="text-2xl" />
           <span className="text-primary_color cursor-pointer text-xl font-semibold">SMARTPHONE</span>
         </div>
-        <div className="flex gap-5">
+        <div className="flex gap-5 items-center">
           {marcas.map((marca) => (
             <div className="flex gap-4" key={marca.id}>
               <span className="text-gray-700 items-center text-sm hover:text-primary_color transition-all cursor-pointer">
@@ -74,14 +75,17 @@ const Elements = () => {
         </div>
       </div>
       <div className="flex mt-5 w-full items-center gap-10">
-        <div>
-            <img src="https://digital-world-4.myshopify.com/cdn/shop/files/banner1-left-home4_300x.png?v=1613156855" alt="" />
+        <div className="flex cursor-pointer">
+            <img className="min-w-52  transition-all duration-500 ease-in" src="https://digital-world-4.myshopify.com/cdn/shop/files/banner1-left-home4_300x.png?v=1613156855" alt="" />
         </div>
             {
                 tablets.map((tablet) =>(
-                    <div key={tablet.id} className="flex border py-5">
-                        <img src={tablet.image} alt={tablet.name} />
-
+                    <div key={tablet.id} className="hover:scale-105 transition-all duration-500 flex flex-col px-5 cursor-pointer border py-5">
+                        <img className=" hover:scale-110 transition-all duration-500" src={tablet.image} alt={tablet.name} />
+                        <div className="flex flex-col gap-.5 mt-3">
+                          <span className="font-light">{tablet.name}</span>
+                          <span className="font-light">${tablet.price}</span>
+                        </div>
                     </div>
                 ))
             }

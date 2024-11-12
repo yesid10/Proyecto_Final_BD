@@ -127,7 +127,7 @@ const Home = () => {
 
       {/*Componente de tipo de elemento tecnologico */}
 
-      <div className=" flex mt-5 mb-5 pt-5 pb-5 w-9/12 rounded-lg gap-[6%] hover:drop-shadow-xl transition-all duration-300 justify-center flex-wrap bg-gray-200">
+      <div className=" flex mt-5 mb-5 pt-5 pb-5 w-9/12 rounded-lg gap-[11%] hover:drop-shadow-xl transition-all duration-300 justify-center flex-wrap bg-gray-200">
         {
           elements.map((element) => (
             <div key={element.id} className="group flex flex-col items-center cursor-pointer">
