@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {create} from 'zustand';
+import { create } from 'zustand';
 
 export const useProduct = create((set) => ({
 
@@ -8,10 +8,11 @@ export const useProduct = create((set) => ({
     loading: false,
     error: null,
 
-    getPeoducts: async () => {
+    //Acciones
+    getProducts: async () => {
 
-        const URL_API = "http://localhost:8080/api/v1/categories/";
-        
+        const URL_API = "http://localhost:8080/api/v1/products/";
+
         set({
             loading: true,
             error: null
@@ -19,11 +20,11 @@ export const useProduct = create((set) => ({
 
         try {
             const response = await axios.get(`${URL_API}list`);
-        console.log(response)
-        set({
-            products: response.data,
-            loading: false,
-        })
+           
+            set({
+                products: response.data,
+                loading: false,
+            })
         } catch (error) {
             set({
                 loading: false,
@@ -31,7 +32,7 @@ export const useProduct = create((set) => ({
             });
         }
 
-        
+
     }
 }));
 
