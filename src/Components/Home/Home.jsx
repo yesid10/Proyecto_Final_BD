@@ -54,8 +54,8 @@ const Home = () => {
     <div className="flex flex-col items-center justify-center mt-4 ">
       {/* Carousel */}
       <Carousel
-        loop="true"
-        autoplay="true"
+        loop={true}
+        autoplay = {true}
         transition={{ duration: 2 }}
         className="group rounded-xl w-9/12 h-[80vh] cursor-pointer"
         prevArrow={({ handlePrev }) => (
@@ -75,7 +75,7 @@ const Home = () => {
       >
         <div className="h-full flex justify-start items-center w-full overflow-hidden">
           <img
-            src="//digital-world-4.myshopify.com/cdn/shop/files/slideshow2-home4_1920x.jpg?v=1613501343"
+            src="https://boica.tuboyaca.com/images/index-2/latest-news-4.jpg"
             alt="image 1"
             className="h-full w-full hover:scale-110 hover:w-screen transition-all duration-500 ease-in-out"
           />
@@ -103,7 +103,7 @@ const Home = () => {
           className="h-full flex justify-center gap-10 group items-center w-full bg-no-repeat bg-[length:2000px] bg-[url(//digital-world-4.myshopify.com/cdn/shop/files/slideshow2-home4_1920x.jpg?v=1613501343)]">
           <img
             className="w-4/12 mr-5 ml-20 group-hover:scale-125 transition-all duration-500"
-            src="https://digital-world-4.myshopify.com/cdn/shop/files/slideshow1-img-home4_600x.png?v=1613156855"
+            src="https://boica.tuboyaca.com/images/galeria/gal5.JPG"
             alt=""
           />
           <div className=" mr-20 flex flex-col items-end w-1/2">
