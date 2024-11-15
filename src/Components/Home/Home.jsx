@@ -71,7 +71,7 @@ const Home = () => {
             <Typography className="uppercase text-gray-600 font-semibold">
               El mejor vendido
             </Typography>
-            <Typography variant="h1" className="font-bold">
+            <Typography variant="h1" className="font-bold text-titles_color">
               Bolso Montaña
             </Typography>
             <Typography className="text-colo_text font-normal">
@@ -93,24 +93,24 @@ const Home = () => {
           />
         </div>
 
-        <div className="h-full flex justify-center gap-10 group items-center w-full bg-no-repeat bg-[length:2000px] bg-[url(//digital-world-4.myshopify.com/cdn/shop/files/slideshow2-home4_1920x.jpg?v=1613501343)]">
+        <div className="h-full flex justify-center gap-10 items-center w-full bg-no-repeat bg-[length:2000px] bg-[url(//digital-world-4.myshopify.com/cdn/shop/files/slideshow2-home4_1920x.jpg?v=1613501343)]">
           <img
-            className="w-4/12 mr-5 ml-20 group-hover:scale-125 transition-all duration-500"
-            src="https://boica.tuboyaca.com/images/galeria/gal5.JPG"
+            className="w-4/12 mr-5 ml-20 rounded-bl-full hover:rounded-3xl hover:scale-110 transition-all duration-500"
+            src="https://images.stockcake.com/public/a/d/8/ad8f8af4-1baa-4434-9389-a5eec7ee1d67_large/majestic-mountain-view-stockcake.jpg"
             alt=""
           />
           <div className=" mr-20 flex flex-col items-end w-1/2">
             <Typography className="uppercase text-gray-600 font-semibold text-end">
               Recién llegados
             </Typography>
-            <Typography variant="h1" className="font-bold text-end">
+            <Typography variant="h1" className="font-bold text-titles_color text-end">
               El mejor{" "}
               <span className="font-serif italic font-light tracking-wide">
                 portátil
               </span>{" "}
               del año
             </Typography>
-            <Typography className="text-gray-600 font-normalf text-end">
+            <Typography className="text-colo_text font-normalf text-end">
               El portátil del año combina un rendimiento imparable, una pantalla
               impresionante y una batería de larga duración, todo en un diseño
               elegante y ligero para satisfacer las necesidades de los usuarios
