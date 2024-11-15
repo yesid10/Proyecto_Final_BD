@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel, Typography, Button } from "@material-tailwind/react";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import Elements from "./typesElements/Elements";
@@ -8,8 +8,17 @@ import { MdToys } from "react-icons/md";
 import { PiPottedPlantFill } from "react-icons/pi";
 import { MdEmojiFoodBeverage } from "react-icons/md";
 import { GiDropEarrings } from "react-icons/gi";
+import { useProduct } from "../../zustand/useProducts";
 
 const Home = () => {
+  const { fuctionGet, setCategory, categories, selectedCategory } =
+    useProduct();
+  const [categoriesWithIcons, setCategoriesWithIcons] = useState([]);
+
+  useEffect(() => {
+    fuctionGet("list");
+  }, [fuctionGet]);
+
   const elements = [
     {
       id: 1,
@@ -42,6 +51,25 @@ const Home = () => {
       icon: <MdEmojiFoodBeverage className="text-2xl" />,
     },
   ];
+
+  useEffect(() => {
+    const categoriesWithIcons = categories.map((category) => {
+      const iconoAsociado = elements.find((icon) => {
+        return icon.name === category.nombre;
+      });
+
+      return {
+        ...category,
+        icono: iconoAsociado ? iconoAsociado.icon : null,
+      };
+    });
+
+    setCategoriesWithIcons(categoriesWithIcons);
+  }, [categories]);
+
+  const handleCategoryChange = (category) => {
+    setCategory(category);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center mt-4 ">
@@ -103,7 +131,10 @@ const Home = () => {
             <Typography className="uppercase text-gray-600 font-semibold text-end">
               Recién llegados
             </Typography>
-            <Typography variant="h1" className="font-bold text-titles_color text-end">
+            <Typography
+              variant="h1"
+              className="font-bold text-titles_color text-end"
+            >
               El mejor{" "}
               <span className="font-serif italic font-light tracking-wide">
                 portátil
@@ -128,17 +159,18 @@ const Home = () => {
       {/*Componente de tipo de elemento tecnologico */}
 
       <div className=" flex mt-5 mb-5 pt-5 pb-5 w-9/12 rounded-lg gap-[11%] hover:drop-shadow-xl transition-all duration-300 justify-center flex-wrap bg-gray-200">
-        {elements.map((element) => (
+        {categoriesWithIcons.map((element) => (
           <div
-            key={element.id}
-            className="group flex flex-col items-center cursor-pointer"
+            onClick={() => handleCategoryChange(element.nombre)}
+            key={element.categoriaId}
+            className={`${
+              selectedCategory === element.nombre ? "opacity-100" : "opacity-50"
+            } transition-all duration-500  flex flex-col items-center cursor-pointer`}
           >
             <div className="flex items-center flex-col">
-              <span className="opacity-50 group-hover:opacity-100 transition-all">
-                {element.icon}
-              </span>
-              <p className="font-light opacity-80 group-hover:opacity-100 transition-all text-sm">
-                {element.name}
+              <span>{element.icono}</span>
+              <p className="font-light transition-all text-sm">
+                {element.nombre}
               </p>
             </div>
           </div>

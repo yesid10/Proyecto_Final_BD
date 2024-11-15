@@ -1,18 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { GiPoncho } from "react-icons/gi";
 import { useProduct } from "../../../zustand/useProducts";
 
 
 const Elements = () => {
 
-  
-  const { products, loading, error, getProducts } = useProduct();
+  const { categories, selectedCategory } = useProduct();
+  const [arrayproducts, setArrayProducts] = useState([]);
+
+
+  const filteredProducts = selectedCategory ? categories.filter((category) =>
+    category.nombre === selectedCategory
+  ) : [];
+
+ 
 
   useEffect(() => {
-    getProducts();
-  }, [getProducts]);
+    if (filteredProducts.length > 0) {
+      setArrayProducts(filteredProducts[0].products || []);
+    }
+  }, [filteredProducts]);
 
-  console.log("Desde el Home", products);
+  const limitedProducts = arrayproducts.slice(0, 4);
+
+
   const marcas = [
     {
       id: 1,
@@ -86,19 +97,19 @@ const Elements = () => {
       </div>
       <div className="flex mt-5 w-full items-center gap-10">
         <div className="flex cursor-pointer">
-            <img className="min-w-52  transition-all duration-500 ease-in" src="https://digital-world-4.myshopify.com/cdn/shop/files/banner1-left-home4_300x.png?v=1613156855" alt="" />
+          <img className="min-w-52  transition-all duration-500 ease-in" src="https://digital-world-4.myshopify.com/cdn/shop/files/banner1-left-home4_300x.png?v=1613156855" alt="" />
         </div>
-            {
-                products.map((product) =>(
-                    <div key={product.productId} className="hover:scale-105 transition-all duration-500 flex flex-col px-5 cursor-pointer border py-5">
-                        <img className=" hover:scale-110 transition-all duration-500" src={product.image_url} alt={product.nombre} />
-                        <div className="flex flex-col gap-.5 mt-3">
-                          <span className="font-light">{product.nombre}</span>
-                          <span className="font-light">${product.precio}</span>
-                        </div>
-                    </div>
-                ))
-            }
+        {
+          limitedProducts?.map((product) => (
+            <div key={product.productoId} className=" hover:scale-105  transition-all duration-500 flex justify-center items-center flex-col px-5 cursor-pointer border py-5">
+              <img src={product.imagen_url} alt={product.nombre} className="flex h-full w-full hover:scale-110 rounded-3xl transition-all duration-500" />
+              <div className="flex flex-col gap-.5 mt-3">
+                <span className="font-light">{product.nombre}</span>
+                <span className="font-light">${product.precio}</span>
+              </div>
+            </div>
+          ))
+        }
       </div>
     </div>
   );
