@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaFacebookF } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa6";
@@ -22,32 +22,27 @@ const Navbar = () => {
   }
 
   const handleNavigateHome = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   const navigationPages = [
     {
       id: 1,
-      icon: <CiMenuFries />,
-      page: "COLECCIONES",
-    },
-    {
-      id: 2,
       page: "HOME",
       icon: <MdOutlineArrowDropDown />,
     },
     {
-      id: 3,
+      id: 2,
       page: "MENU",
       icon: <MdOutlineArrowDropDown />,
     },
     {
-      id: 4,
+      id: 3,
       page: "CARRITO",
       icon: <MdOutlineArrowDropDown />,
     },
     {
-      id: 5,
+      id: 4,
       page: "CONTACTO",
       icon: <MdOutlineArrowDropDown />,
     },
@@ -95,8 +90,11 @@ const Navbar = () => {
             viewBox="0 0 350 128.778"
             onClick={() => handleNavigateHome()}
           >
-
-            <g xmlns="http://www.w3.org/2000/svg" id="SvgjsG3445" fill="#2d4059">
+            <g
+              xmlns="http://www.w3.org/2000/svg"
+              id="SvgjsG3445"
+              fill="#2d4059"
+            >
               <path d="M124 41.84s13.307-8.16 18.203-10.043 7.783-2.887 12.554-6.528c4.896-3.766 11.047-11.424 13.181-13.056 2.134-1.506 2.134-1.004 6.152-2.385 5.021-1.758 11.926-12.303 14.562-9.29 1.507 1.883 5.524 13.433 7.281 8.662.754-2.008 2.386-5.272 4.018-4.017 1.757 1.38 1.38 1.13 3.138 7.532 1.757 6.403 2.51 6.026 4.77 8.286 2.386 2.134.628 1.13 3.139 6.151 2.636 5.022 7.783 10.67 9.666 13.684 1.256 2.26 2.26 4.017 2.637 4.645-5.524-1.758-15.944-4.77-27.995-6.78-1.13-2.134-1.256-5.649-1.507-6.904-1.004-5.022-7.532-3.515-5.272-7.658.753-1.632 11.172-11.173 7.657-10.67-2.134.376-5.9 1.13-6.653 1.506-10.67 4.52 2.51-10.545-8.286-5.9-1.004.502-3.891 0-5.649 1.883-1.632 1.883-3.892-.377-5.9 1.883s-.753 3.264-4.017 5.9c-3.139 2.636-3.013 2.762-5.775 4.645-2.636 1.883-3.013 4.52-5.398 5.398-2.26.879-6.654 3.013-8.16 3.013-1.632 0-7.91 3.766-8.662 4.52-.628.878-13.684 5.523-13.684 5.523"></path>
               <path d="M128.394 44.727s26.614-7.155 50.968-5.398c24.23 1.758 47.58 10.169 47.58 10.169l-9.04 2.385c-19.583-7.407-39.795-9.666-39.795-9.666s19.333 6.151 30.506 12.177l-15.19 3.891s-15.693-9.415-26.238-12.428c-10.42-3.013-38.791-1.13-38.791-1.13"></path>
             </g>
@@ -148,6 +146,9 @@ const Navbar = () => {
 
       <div className="sm:flex hidden bg-secondary_color text-white py-5">
         <ul className="flex w-screen font-semibold justify-center gap-[9.5%]">
+          <li className="flex text-colo_text text-sm font-light  hover:font-medium transition-all duration-500 justify-center items-center gap-4 cursor-pointer">
+            <CiMenuFries/> COLECCIONES
+          </li>
           {navigationPages.map((item) => (
             <li
               className="flex text-colo_text text-sm font-light  hover:font-medium transition-all duration-500 justify-center items-center gap-4 cursor-pointer"

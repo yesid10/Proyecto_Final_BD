@@ -78,7 +78,7 @@ const Elements = () => {
   //   }
   // ]
   return (
-    <div className="flex flex-col w-9/12 mb-10">
+    <div className="transform animate-slide-in-right flex flex-col w-9/12 mb-10">
       <div className="flex w-full justify-between border py-4 px-4 border-t-primary_color">
         <div className="flex gap-3 items-center justify-center border-l">
           <GiPoncho className="text-2xl" />
@@ -97,7 +97,7 @@ const Elements = () => {
       </div>
       <div className="flex mt-5 w-full items-center gap-10">
         <div className="flex cursor-pointer">
-          <img className="min-w-52  transition-all duration-500 ease-in" src="https://digital-world-4.myshopify.com/cdn/shop/files/banner1-left-home4_300x.png?v=1613156855" alt="" />
+          <img className="min-w-64 min-h-64 rounded-lg  transition-all duration-500" src={limitedProducts[0]?.imagen_url} alt="" />
         </div>
         {
           limitedProducts?.map((product) => (
