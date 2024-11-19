@@ -164,9 +164,8 @@ const Home = () => {
           <div
             onClick={() => handleCategoryChange(element.nombre)}
             key={element.categoriaId}
-            className={`${
-              selectedCategory === element.nombre ? "opacity-100" : "opacity-50"
-            } transition-all duration-500  flex flex-col items-center cursor-pointer`}
+            className={`${selectedCategory === element.nombre ? "opacity-100" : "opacity-50"
+              } transition-all duration-500  flex flex-col items-center cursor-pointer`}
           >
             <div className="flex items-center flex-col">
               <span>{element.icono}</span>
@@ -177,10 +176,23 @@ const Home = () => {
           </div>
         ))}
       </div>
-      
+
       <Elements />
       <Elements />
-      <Artesanos/>
+      <Artesanos
+        imagePosition="right"
+        title="Visita nuestra tienda de artesanías en Cucaita"
+        buttonText="¿ Donde estamos ubicados ?"
+        description="Artesanías de Cucaita es una tienda dedicada a resaltar la riqueza cultural y la tradición artesanal de Cucaita, Boyacá. Aquí encontrarás una cuidada selección de productos únicos elaborados a mano por talentosos artesanos locales, quienes combinan técnicas ancestrales con diseños contemporáneos. "
+        imageUrl="https://scontent.fbaq9-1.fna.fbcdn.net/v/t1.6435-9/106558990_3086946791341274_1845844166207932467_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=0b6b33&_nc_ohc=RjBk59SJOOEQ7kNvgF9nwFk&_nc_zt=23&_nc_ht=scontent.fbaq9-1.fna&_nc_gid=AkzHOYO-klnycOpFlGuXWsw&oh=00_AYDXTrliX3hg_i0hAUn3bTRUYa6fnGNhYiv-Q6nx-Ot_6w&oe=67643E12"
+      />
+      <Artesanos
+        imagePosition="left"
+        title="Nuestros creadores de artesanías de Cucaita"
+        description="Los artesanos de Cucaita, Boyacá, son guardianes de tradiciones ancestrales que reflejan la riqueza cultural de la región. Reconocidos por su habilidad y creatividad, trabajan con materiales como lana, fique, y madera para crear ruanas, sombreros, y otros productos únicos que combinan funcionalidad y arte."
+        buttonText="Conoce a nuestros artesanos"
+        imageUrl="https://images.stockcake.com/public/3/0/f/30f19187-87a7-454e-9053-acd0d3b6bb6a_large/artisans-weaving-textiles-stockcake.jpg"
+      />
     </div>
   );
 };
