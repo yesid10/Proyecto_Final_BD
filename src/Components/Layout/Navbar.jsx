@@ -24,6 +24,16 @@ const Navbar = () => {
   const handleNavigateHome = () => {
     navigate("/");
   };
+  const navigatePages = (pages) => {
+  
+    if(typeof pages === "string"){
+      const pageNoUppercase = pages.toLowerCase();
+      console.log(pageNoUppercase)
+      navigate(pageNoUppercase)
+    }else{
+      console.error("El paarametro 'pages' no es una cadena de texto");
+    }
+  }
 
   const navigationPages = [
     {
@@ -33,7 +43,7 @@ const Navbar = () => {
     },
     {
       id: 2,
-      page: "MENU",
+      page: "PRODUCTOS",
       icon: <MdOutlineArrowDropDown />,
     },
     {
@@ -151,6 +161,7 @@ const Navbar = () => {
           </li>
           {navigationPages.map((item) => (
             <li
+              onClick={() => navigatePages(item.page)}
               className="flex text-colo_text text-sm font-light  hover:font-medium transition-all duration-500 justify-center items-center gap-4 cursor-pointer"
               key={item.id}
             >
