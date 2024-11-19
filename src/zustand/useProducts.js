@@ -11,7 +11,7 @@ export const useProduct = create((set) => ({
     selectedCategory: "Ruanas",
 
     //Acciones
-    fuctionGet: async (endpoint) => {
+    functionGet: async (endpoint) => {
 
         const URL_API = "http://localhost:8080/api/v1/categories/";
 

@@ -9,15 +9,16 @@ import { PiPottedPlantFill } from "react-icons/pi";
 import { MdEmojiFoodBeverage } from "react-icons/md";
 import { GiDropEarrings } from "react-icons/gi";
 import { useProduct } from "../../zustand/useProducts";
+import Artesanos from "./listaArtesanos/Artesanos";
 
 const Home = () => {
-  const { fuctionGet, setCategory, categories, selectedCategory } =
+  const { functionGet, setCategory, categories, selectedCategory } =
     useProduct();
   const [categoriesWithIcons, setCategoriesWithIcons] = useState([]);
 
   useEffect(() => {
-    fuctionGet("list");
-  }, [fuctionGet]);
+    functionGet("list");
+  }, [functionGet]);
 
   const elements = [
     {
@@ -176,7 +177,10 @@ const Home = () => {
           </div>
         ))}
       </div>
+      
       <Elements />
+      <Elements />
+      <Artesanos/>
     </div>
   );
 };
