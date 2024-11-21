@@ -6,6 +6,7 @@ export const useProduct = create((set) => ({
     //Estados iniciales
     productos: [],
     productSelected: null,
+    
     categories: [],
     loading: false,
     error: null,

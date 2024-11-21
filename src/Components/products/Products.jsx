@@ -64,9 +64,9 @@ const Products = () => {
                   className=" w-full object-contain object-center group-hover:opacity-75"
                 />
               </div>
-              <h3 className="mt-4 text-sm text-gray-700">{product.nombre}</h3>
-              <p className="mt-1 text-lg font-medium text-gray-900">
-                {product.precio}
+              <h3 className="mt-4 text-sm text-colo_text">{product.nombre}</h3>
+              <p className="mt-1 text-lg font-medium text-titles_color">
+                $ {product.precio}
               </p>
             </Link>
           ))}

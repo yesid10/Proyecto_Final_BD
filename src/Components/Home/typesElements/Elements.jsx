@@ -104,8 +104,8 @@ const Elements = () => {
             <div key={product.productoId} className=" hover:scale-105  transition-all duration-500 flex justify-center items-center flex-col px-5 cursor-pointer border py-5">
               <img src={product.imagen_url} alt={product.nombre} className="flex h-full w-full hover:scale-110 rounded-3xl transition-all duration-500" />
               <div className="flex flex-col gap-.5 mt-3">
-                <span className="font-light">{product.nombre}</span>
-                <span className="font-light">${product.precio}</span>
+                <span className="font-light text-colo_text">{product.nombre}</span>
+                <span className="font-medium text-titles_color">${product.precio}</span>
               </div>
             </div>
           ))

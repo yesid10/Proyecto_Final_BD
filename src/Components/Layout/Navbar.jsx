@@ -31,7 +31,7 @@ const Navbar = () => {
       console.log(pageNoUppercase)
       navigate(pageNoUppercase)
     }else{
-      console.error("El paarametro 'pages' no es una cadena de texto");
+      console.error("El parámetro 'pages' no es una cadena de texto");
     }
   }
 
