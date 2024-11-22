@@ -77,7 +77,7 @@ const Home = () => {
       {/* Carousel */}
       <Carousel
         loop={true}
-        autoplay={false}
+        autoplay={true}
         transition={{ duration: 2 }}
         className="group rounded-xl w-9/12 h-[80vh] cursor-pointer"
         prevArrow={({ handlePrev }) => (

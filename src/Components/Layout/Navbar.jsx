@@ -11,29 +11,48 @@ import { FaUserAlt } from "react-icons/fa";
 import { CiShoppingCart } from "react-icons/ci";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { CiMenuFries } from "react-icons/ci";
+import {
+  Button,
+  Dialog,
+  Card,
+  CardBody,
+  CardFooter,
+  Typography,
+  Input,
+  Checkbox,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+} from "@material-tailwind/react";
+import Cart from "../cart/Cart";
 
 const Navbar = () => {
-  const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
+  const [openCart, setOpenCart] = React.useState(false);
 
   const [isOpen, setIsOpen] = useState();
+
+  const navigate = useNavigate();
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
 
+  const handleOpenSingIn = () => setOpen((cur) => !cur);
+  const handleOpenCart = () => setOpenCart(!openCart);
+
   const handleNavigateHome = () => {
     navigate("/");
   };
   const navigatePages = (pages) => {
-  
-    if(typeof pages === "string"){
+    if (typeof pages === "string") {
       const pageNoUppercase = pages.toLowerCase();
-      console.log(pageNoUppercase)
-      navigate(pageNoUppercase)
-    }else{
+      console.log(pageNoUppercase);
+      navigate(pageNoUppercase);
+    } else {
       console.error("El parámetro 'pages' no es una cadena de texto");
     }
-  }
+  };
 
   const navigationPages = [
     {
@@ -146,9 +165,70 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-5">
           <GoHeart className="text-3xl sm:flex hidden cursor-pointer" />
-          <FaUserAlt className="text-2xl sm:flex hidden cursor-pointer" />
-          <div className=" gap-1 items-center justify-center cursor-pointer">
+          <FaUserAlt
+            onClick={handleOpenSingIn}
+            className="text-2xl sm:flex hidden cursor-pointer"
+          />
+          <Dialog
+            size="xs"
+            open={open}
+            handler={handleOpenSingIn}
+            className="bg-transparent shadow-none"
+          >
+            <Card className="mx-auto w-full max-w-[24rem]">
+              <CardBody className="flex flex-col gap-4">
+                <Typography variant="h4" color="blue-gray">
+                  Sign In
+                </Typography>
+                <Typography
+                  className="mb-3 font-normal"
+                  variant="paragraph"
+                  color="gray"
+                >
+                  Enter your email and password to Sign In.
+                </Typography>
+                <Typography className="-mb-2" variant="h6">
+                  Your Email
+                </Typography>
+                <Input label="Email" size="lg" />
+                <Typography className="-mb-2" variant="h6">
+                  Your Password
+                </Typography>
+                <Input label="Password" size="lg" />
+                <div className="-ml-2.5 -mt-3">
+                  <Checkbox label="Remember Me" />
+                </div>
+              </CardBody>
+              <CardFooter className="pt-0">
+                <Button variant="gradient" onClick={handleOpenSingIn} fullWidth>
+                  Sign In
+                </Button>
+                <Typography
+                  variant="small"
+                  className="mt-4 flex justify-center"
+                >
+                  Don&apos;t have an account?
+                  <Typography
+                    as="a"
+                    href="#signup"
+                    variant="small"
+                    color="blue-gray"
+                    className="ml-1 font-bold"
+                    onClick={handleOpenSingIn}
+                  >
+                    Sign up
+                  </Typography>
+                </Typography>
+              </CardFooter>
+            </Card>
+          </Dialog>
+          <div
+            onClick={handleOpenCart}
+            variant="gradient"
+            className=" gap-1 items-center justify-center cursor-pointer"
+          >
             <CiShoppingCart className="text-3xl " />
+            {openCart && <Cart handleOpenCart={handleOpenCart} openCart={openCart}/>}
             <span className="sm:flex hidden ">$0.00 COP</span>
           </div>
         </div>
@@ -157,7 +237,7 @@ const Navbar = () => {
       <div className="sm:flex hidden bg-secondary_color text-white py-5">
         <ul className="flex w-screen font-semibold justify-center gap-[9.5%]">
           <li className="flex text-colo_text text-sm font-light  hover:font-medium transition-all duration-500 justify-center items-center gap-4 cursor-pointer">
-            <CiMenuFries/> COLECCIONES
+            <CiMenuFries /> COLECCIONES
           </li>
           {navigationPages.map((item) => (
             <li

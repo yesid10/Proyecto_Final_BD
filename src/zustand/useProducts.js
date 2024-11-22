@@ -6,7 +6,7 @@ export const useProduct = create((set) => ({
     //Estados iniciales
     productos: [],
     productSelected: null,
-    
+    cantidadComprar : 1,
     categories: [],
     loading: false,
     error: null,
@@ -42,6 +42,7 @@ export const useProduct = create((set) => ({
 
     setProductSelected: (product) => set({productSelected: product}),
 
+    setCantidadComprar: (cantidad) => set({setCantidadComprar: cantidad}),
     
 }));
 

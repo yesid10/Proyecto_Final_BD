@@ -4,7 +4,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
 
 const DetailProduct = () => {
-    const { productSelected } = useProduct();
+    const { productSelected, cantidadComprar, setCantidadComprar } = useProduct();
     const { description, imagen_url, nombre, precio, stock } = productSelected;
 
     const [position, setPosition] = useState({ x: "50%", y: "50%" });
@@ -59,7 +59,7 @@ const DetailProduct = () => {
                         <span>Cantidad</span>
                         <span className="flex text-colo_text gap-4 justify-center items-center">
                             <CiCirclePlus className="text-3xl cursor-pointer "/>
-                            {1}
+                            {cantidadComprar}
                             <CiCircleMinus className="text-3xl cursor-pointer"/>
                         </span>
                     </div>
