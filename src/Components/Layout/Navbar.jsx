@@ -228,7 +228,7 @@ const Navbar = () => {
             className=" gap-1 items-center justify-center cursor-pointer"
           >
             <CiShoppingCart className="text-3xl " />
-            {openCart && <Cart handleOpenCart={handleOpenCart} openCart={openCart}/>}
+             <Cart handleOpenCart={handleOpenCart} openCart={openCart}/>
             <span className="sm:flex hidden ">$0.00 COP</span>
           </div>
         </div>
