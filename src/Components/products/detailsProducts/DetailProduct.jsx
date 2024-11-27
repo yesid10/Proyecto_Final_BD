@@ -92,11 +92,9 @@ const DetailProduct = () => {
               </div>
             </div>
           ) : (
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Productos agotados",
-            })
+            <span className="flex justify-center items-center text-red-300">
+              Productos agotados 😥
+            </span>
           )}
         </div>
       </div>

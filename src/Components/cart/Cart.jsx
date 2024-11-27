@@ -15,18 +15,21 @@ import {
 } from "@material-tailwind/react";
 import { useProduct } from "../../zustand/useProducts";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Cart = ({ openCart, handleOpenCart }) => {
   // const [openCart, setOpenCart] = React.useState(false);
   // const handleOpenCart = () => setOpenCart(!openCart);
+    const navigate = useNavigate()
 
   const handleNavigateToCart = () => {
-    console.log("desde cart");
+    navigate("/detail-cart")
   };
 
   const { cart, totalPrice, setPriceTotal, loadCart, removeFromCart, clearCart } =
     useProduct();
 
+    console.log(cart)
   const precioTotal = cart?.reduce(
     (sum, item) => sum + item.precio * item.quantity,
     0
