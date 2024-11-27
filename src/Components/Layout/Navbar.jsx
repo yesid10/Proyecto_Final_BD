@@ -20,19 +20,21 @@ import {
   Typography,
   Input,
   Checkbox,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
 } from "@material-tailwind/react";
 import Cart from "../cart/Cart";
 import { useProduct } from "../../zustand/useProducts";
 import LogoPage from "../logo/LogoPage";
+import { useAuth } from "../../zustand/authUsers";
+import { FcGoogle } from "react-icons/fc";
 
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
   const [openCart, setOpenCart] = React.useState(false);
 
-  const {totalPrice} = useProduct();
+  const { totalPrice } = useProduct();
+
+  const { loginWithGoogle, user } = useAuth();
+  console.log("desde el navbar", user)
 
   const [isOpen, setIsOpen] = useState();
 
@@ -45,7 +47,6 @@ const Navbar = () => {
   const handleOpenSingIn = () => setOpen((cur) => !cur);
   const handleOpenCart = () => setOpenCart(!openCart);
 
-  
   const navigatePages = (pages) => {
     if (typeof pages === "string") {
       const pageNoUppercase = pages.toLowerCase();
@@ -56,6 +57,10 @@ const Navbar = () => {
     }
   };
 
+  const handleClickedLoginWithGoogle = () => {
+    handleOpenSingIn();
+    loginWithGoogle();
+  }
   const navigationPages = [
     {
       id: 1,
@@ -114,7 +119,7 @@ const Navbar = () => {
         </div>
 
         <div className="sm:flex hidden items-center  gap-[8%] ">
-          <LogoPage/>
+          <LogoPage />
           <div className="flex">
             <select className="border-2 rounded-sm py-2" name="" id="">
               <option value="">Colecciones</option>
@@ -178,6 +183,10 @@ const Navbar = () => {
                 <Button variant="gradient" onClick={handleOpenSingIn} fullWidth>
                   Sign In
                 </Button>
+
+                <button onClick={() => handleClickedLoginWithGoogle()} className="flex bg-colo_text px-2 py-2 rounded-lg font-medium hover:scale-95 transition-all duration-300 text-gray-200 w-full justify-center items-center mt-5 gap-5">
+                  <FcGoogle className="text-xl" /> Hazlo con google
+                </button>
                 <Typography
                   variant="small"
                   className="mt-4 flex justify-center"
@@ -203,8 +212,10 @@ const Navbar = () => {
             className=" flex flex-col gap-1 items-center justify-center cursor-pointer"
           >
             <CiShoppingCart className="text-3xl " />
-             <Cart handleOpenCart={handleOpenCart} openCart={openCart}/>
-            <span className="sm:flex hidden text-primary_color font-semibold">$ {totalPrice === 0 ? "0.00" : totalPrice}</span>
+            <Cart handleOpenCart={handleOpenCart} openCart={openCart} />
+            <span className="sm:flex hidden text-primary_color font-semibold">
+              $ {totalPrice === 0 ? "0.00" : totalPrice}
+            </span>
           </div>
         </div>
       </div>

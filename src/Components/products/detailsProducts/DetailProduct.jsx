@@ -58,7 +58,7 @@ const DetailProduct = () => {
 
         <div className="flex w-full justify-start gap-[10%]">
           <button
-            disabled={productSelected.stock > 0 ? false : true}
+            disabled={ cantidadComprar > stock ? true : false}
             onClick={() => addCart(productSelected, cantidadComprar)}
             className={`bg-primary_color text-gray-200 opacity-${
               productSelected.stock > 0 ? "100" : "30"

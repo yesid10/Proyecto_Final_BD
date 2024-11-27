@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 import { create } from "zustand";
 
 export const useProduct = create((set) => ({
@@ -44,10 +45,10 @@ export const useProduct = create((set) => ({
         sessionStorage.setItem("productSelected", JSON.stringify(product));
     },
     setCantidadComprar: (cantidad) => {
-        sessionStorage.removeItem("cart");
+        // sessionStorage.removeItem("cart");
         set({ 
             cantidadComprar: cantidad,
-            cart: []
+            // cart: []
         })
     },
 
@@ -66,6 +67,11 @@ export const useProduct = create((set) => ({
                         : item
                 )
                 : [...state.cart, { ...product, quantity: cantidadSeleccionada }];
+                Swal.fire({
+                    title: "Good job!",
+                    text: "Agregado al carrito correctamente!",
+                    icon: "success"
+                  });
 
             // Guarda el carrito actualizado en localStorage
             sessionStorage.setItem("cart", JSON.stringify(updatedCart));
