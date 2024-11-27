@@ -1,4 +1,5 @@
 import React from 'react'
+import LogoPage from '../../logo/LogoPage'
 
 const Footer = () => {
   return (
@@ -10,6 +11,9 @@ const Footer = () => {
           <p className="text-sm text-secondary_color/80 text-center md:text-left">
             Creando tradición y arte desde el corazón de Boyacá. Apoya el talento local y lleva un pedazo de nuestra historia contigo.
           </p>
+          <div className='flex w-full justify-center'>
+            <LogoPage />
+          </div>
         </div>
 
         {/* Enlaces de navegación */}
