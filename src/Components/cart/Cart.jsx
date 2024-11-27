@@ -23,7 +23,7 @@ const Cart = ({ openCart, handleOpenCart }) => {
     const navigate = useNavigate()
 
   const handleNavigateToCart = () => {
-    navigate("/detail-cart")
+    navigate("/carrito")
   };
 
   const { cart, totalPrice, setPriceTotal, loadCart, removeFromCart, clearCart } =
