@@ -26,5 +26,8 @@ export const useAuth = create((set) => ({
                 confirmButtonText: 'Cool'
               })
         }
-    }
+    },
+
+    setUser: (user) => set({ user }),
+    setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
 })) 

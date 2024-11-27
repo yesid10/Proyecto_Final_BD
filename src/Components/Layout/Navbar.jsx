@@ -34,7 +34,7 @@ const Navbar = () => {
   const { totalPrice } = useProduct();
 
   const { loginWithGoogle, user } = useAuth();
-  console.log("desde el navbar", user)
+  console.log("Logueado y mostrado desde el nav", user)
 
   const [isOpen, setIsOpen] = useState();
 

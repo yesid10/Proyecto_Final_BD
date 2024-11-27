@@ -30,7 +30,6 @@ const Cart = ({ openCart, handleOpenCart }) => {
   const { cart, totalPrice, setPriceTotal, loadCart, removeFromCart, clearCart } =
     useProduct();
 
-    console.log(cart)
   const precioTotal = cart?.reduce(
     (sum, item) => sum + item.precio * item.quantity,
     0
