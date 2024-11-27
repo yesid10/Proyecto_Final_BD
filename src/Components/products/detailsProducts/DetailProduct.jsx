@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useProduct } from "../../../zustand/useProducts";
 import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
+import Swal from "sweetalert2";
 
 const DetailProduct = () => {
-  const { productSelected, cantidadComprar, setCantidadComprar, addCart } =
-    useProduct();
-  const { description, imagen_url, nombre, precio, stock } = productSelected;
+  const { productSelected, addCart } = useProduct();
+  const { productoId, description, imagen_url, nombre, precio, stock } =
+    productSelected;
+
+  const [cantidadComprar, setCantidadComprar] = useState(1);
+
+  const incrementQuantity = () => {
+    setCantidadComprar((prev) => prev + 1);
+  };
+
+  const decrementQuantity = () => {
+    setCantidadComprar((prev) => (prev > 1 ? prev - 1 : 1));
+  };
 
   const [position, setPosition] = useState({ x: "50%", y: "50%" });
   const [isZoomed, setIsZoomed] = useState(false);
@@ -58,19 +69,35 @@ const DetailProduct = () => {
         <div className="flex w-full justify-start gap-[10%]">
           <button
             disabled={productSelected.stock > 0 ? false : true}
-            onClick={() => addCart(productSelected)}
-            className={`bg-primary_color text-gray-200 opacity-${productSelected.stock > 0 ? "100" : "30"} hover:font-medium transition-all ease-in-out duration-300 text-lg rounded-lg w-3/4 px-4 py-5 text-center`}
+            onClick={() => addCart(productSelected, cantidadComprar)}
+            className={`bg-primary_color text-gray-200 opacity-${
+              productSelected.stock > 0 ? "100" : "30"
+            } hover:font-medium transition-all ease-in-out duration-300 text-lg rounded-lg w-3/4 px-4 py-5 text-center`}
           >
             Agregar al carrito
           </button>
-          <div className="flex border py-1 rounded-md px-4 justify-center items-center flex-col">
-            <span>Cantidad</span>
-            <span className="flex text-colo_text gap-4 justify-center items-center">
-              <CiCirclePlus className="text-3xl cursor-pointer " />
-              {cantidadComprar}
-              <CiCircleMinus className="text-3xl cursor-pointer" />
-            </span>
-          </div>
+          {cantidadComprar < stock ? (
+            <div className="flex border py-1 rounded-md px-4 justify-center items-center flex-col">
+              <span>Cantidad</span>
+              <div className="flex text-colo_text gap-4 justify-center items-center">
+                <CiCirclePlus
+                  onClick={() => incrementQuantity()}
+                  className="text-3xl cursor-pointer "
+                />
+                {cantidadComprar}
+                <CiCircleMinus
+                  onClick={() => decrementQuantity()}
+                  className="text-3xl cursor-pointer"
+                />
+              </div>
+            </div>
+          ) : (
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Productos agotados",
+            })
+          )}
         </div>
       </div>
     </div>

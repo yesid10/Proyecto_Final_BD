@@ -14,6 +14,7 @@ import {
   DialogFooter,
 } from "@material-tailwind/react";
 import { useProduct } from "../../zustand/useProducts";
+import Swal from "sweetalert2";
 
 const Cart = ({ openCart, handleOpenCart }) => {
   // const [openCart, setOpenCart] = React.useState(false);
@@ -23,8 +24,8 @@ const Cart = ({ openCart, handleOpenCart }) => {
     console.log("desde cart");
   };
 
-  const { cart, totalPrice, setPriceTotal, loadCart } = useProduct();
-
+  const { cart, totalPrice, setPriceTotal, loadCart, removeFromCart, clearCart } =
+    useProduct();
 
   const precioTotal = cart?.reduce(
     (sum, item) => sum + item.precio * item.quantity,
@@ -33,12 +34,11 @@ const Cart = ({ openCart, handleOpenCart }) => {
 
   useEffect(() => {
     setPriceTotal(precioTotal);
-    
   }, [cart, setPriceTotal, loadCart]);
 
   useEffect(() => {
     loadCart();
-  }, [loadCart])
+  }, [loadCart]);
 
   return (
     <Dialog
@@ -46,7 +46,7 @@ const Cart = ({ openCart, handleOpenCart }) => {
       size="sm"
       open={openCart}
       handler={handleOpenCart}
-      className="absolute flex flex-col justify-between right-0 h-screen rounded-none"
+      className="absolute flex flex-col  justify-between right-0 h-screen rounded-none"
     >
       <DialogHeader className="flex flex-col   mt-10">
         {cart?.length > 0 ? (
@@ -65,14 +65,17 @@ const Cart = ({ openCart, handleOpenCart }) => {
                   {item.nombre}
                 </span>
                 <div className="flex w-full justify-between text-primary_color">
-                  <span className="">
-                    Cantidad {item.quantity}
-                  </span>
+                  <span className="">Cantidad <span className="text-colo_text font-medium">{item.quantity}</span></span>
                   <span className="">$ {item.precio}</span>
                 </div>
               </div>
-              
-              <button className="text-red-300 hover:bg-red-100 py-1 px-1 rounded-lg transition-all duration-150"><IoClose className=""/></button>
+
+              <button
+                onClick={() => removeFromCart(item.productoId)}
+                className="text-red-300 hover:bg-red-100 py-1 px-1 rounded-lg transition-all duration-150"
+              >
+                <IoClose className="" />
+              </button>
             </div>
           ))
         ) : (
@@ -85,9 +88,17 @@ const Cart = ({ openCart, handleOpenCart }) => {
           <span className="text-2xl font-medium text-colo_text">Total: </span>
           <span className="text-2xl font-normal ">{totalPrice}</span>
         </div>
-        <Button className="w-4/5 bg-titles_color hover:scale-110 transition-all duration-300" onClick={() => handleNavigateToCart()}>
-          <span>Ir a pagar</span>
-        </Button>
+        <div className="flex w-full gap-5">
+          <Button
+            className="w-4/5 bg-titles_color hover:scale-95 transition-all duration-300"
+            onClick={() => handleNavigateToCart()}
+          >
+            <span>Ir a pagar</span>
+          </Button>
+          <button onClick={() => clearCart()} className="flex w-2/6 hover:scale-95 rounded-lg text-titles_color font-semibold text-center items-center justify-center bg-red-300 hover:bg-red-400 transition-all duration-200">
+            Limpiar carrito
+          </button>
+        </div>
       </DialogFooter>
     </Dialog>
   );

@@ -45,7 +45,7 @@ export const useProduct = create((set) => ({
 
   setPriceTotal: (price) => set({ totalPrice: price }),
 
-  addCart: (product) => {
+  addCart: (product, cantidadSeleccionada) => {
     set((state) => {
       const existingProduct = state.cart.find(
         (item) => item.productoId === product.productoId
@@ -54,10 +54,10 @@ export const useProduct = create((set) => ({
       const updatedCart = existingProduct
         ? state.cart.map((item) =>
             item.productoId === product.productoId
-              ? { ...item, quantity: item.quantity + 1 }
+              ? { ...item, quantity: item.quantity + cantidadSeleccionada}
               : item
           )
-        : [...state.cart, { ...product, quantity: 1 }];
+        : [...state.cart, { ...product, quantity: cantidadSeleccionada }];
 
       // Guarda el carrito actualizado en localStorage
       sessionStorage.setItem("cart", JSON.stringify(updatedCart));
@@ -73,24 +73,24 @@ export const useProduct = create((set) => ({
 
   removeFromCart: (productId) =>
     set((state) => ({
-      cart: state.cart.filter((item) => item.id !== productId),
+      cart: state.cart.filter((item) => item.productoId !== productId),
     })),
 
-  incrementQuantity: (productId) =>
-    set((state) => ({
-      cart: state.cart.map((item) =>
-        item.productId === productId
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      ),
-    })),
-  decrementQuantity: (productId) =>
-    set((state) => ({
-      cart: state.cart.map((item) =>
-        item.id === productId && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      ),
-    })),
+//   incrementQuantity: (productId) =>
+//     set((state) => ({
+//       cart: state.cart.map((item) =>
+//         item.productoId === productId
+//           ? { ...item, quantity: item.quantity + 1 }
+//           : item
+//       ),
+//     })),
+//   decrementQuantity: (productId) =>
+//     set((state) => ({
+//       cart: state.cart.map((item) =>
+//         item.productoId === productId && item.quantity > 1
+//           ? { ...item, quantity: item.quantity - 1 }
+//           : item
+//       ),
+//     })),
   clearCart: () => set({ cart: [] }), // Limpia el carrito
 }));
