@@ -25,10 +25,13 @@ import {
   DialogFooter,
 } from "@material-tailwind/react";
 import Cart from "../cart/Cart";
+import { useProduct } from "../../zustand/useProducts";
 
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
   const [openCart, setOpenCart] = React.useState(false);
+
+  const {totalPrice} = useProduct();
 
   const [isOpen, setIsOpen] = useState();
 
@@ -229,7 +232,7 @@ const Navbar = () => {
           >
             <CiShoppingCart className="text-3xl " />
              <Cart handleOpenCart={handleOpenCart} openCart={openCart}/>
-            <span className="sm:flex hidden ">$0.00 COP</span>
+            <span className="sm:flex hidden text-primary_color font-semibold">$ {totalPrice}</span>
           </div>
         </div>
       </div>

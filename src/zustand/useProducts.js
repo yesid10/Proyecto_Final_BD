@@ -5,6 +5,7 @@ export const useProduct = create((set) => ({
   //Estados iniciales
   productos: [],
   cart: [],
+  totalPrice: 0,
   productSelected: null,
   cantidadComprar: 1,
   categories: [],
@@ -41,15 +42,19 @@ export const useProduct = create((set) => ({
   setProductSelected: (product) => set({ productSelected: product }),
 
   setCantidadComprar: (cantidad) => set({ setCantidadComprar: cantidad }),
+  
+  setPriceTotal: (price) => set({ totalPrice: price}),
 
   addCart: (product) => {
+  
     set((state) => {
-      const existingProduct = state.cart.find((item) => item.id === product.id);
+      const existingProduct = state.cart.find((item) => item.productoId === product.productoId);
+ 
 
       if (existingProduct) {
         return {
           cart: state.cart.map((item) =>
-            item.id === product.id
+            item.productoId === product.productoId
               ? { ...item, quantity: item.quantity + 1 }
               : item
           ),
@@ -62,10 +67,14 @@ export const useProduct = create((set) => ({
     });
   },
 
+  
+
+
   removeFromCart: (productId) =>
     set((state) => ({
       cart: state.cart.filter((item) => item.id !== productId),
     })),
+
   incrementQuantity: (productId) =>
     set((state) => ({
       cart: state.cart.map((item) =>
