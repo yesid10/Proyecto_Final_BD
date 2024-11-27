@@ -6,8 +6,7 @@ export const useProduct = create((set) => ({
   productos: [],
   cart: [],
   totalPrice: 0,
-  productSelected: null,
-  cantidadComprar: 1,
+  productSelected: JSON.parse(sessionStorage.getItem("productSelected")) || null,
   categories: [],
   loading: false,
   error: null,
@@ -39,36 +38,38 @@ export const useProduct = create((set) => ({
 
   setCategory: (category) => set({ selectedCategory: category }),
 
-  setProductSelected: (product) => set({ productSelected: product }),
+  setProductSelected: (product) => {
+    set({ productSelected: product });
+    sessionStorage.setItem("productSelected", JSON.stringify(product));
+  },
 
-  setCantidadComprar: (cantidad) => set({ setCantidadComprar: cantidad }),
-  
-  setPriceTotal: (price) => set({ totalPrice: price}),
+  setPriceTotal: (price) => set({ totalPrice: price }),
 
   addCart: (product) => {
-  
     set((state) => {
-      const existingProduct = state.cart.find((item) => item.productoId === product.productoId);
- 
+      const existingProduct = state.cart.find(
+        (item) => item.productoId === product.productoId
+      );
 
-      if (existingProduct) {
-        return {
-          cart: state.cart.map((item) =>
+      const updatedCart = existingProduct
+        ? state.cart.map((item) =>
             item.productoId === product.productoId
               ? { ...item, quantity: item.quantity + 1 }
               : item
-          ),
-        };
-      } else{
-        return {
-            cart: [...state.cart, {...product, quantity: 1}],
-        }
-      }
+          )
+        : [...state.cart, { ...product, quantity: 1 }];
+
+      // Guarda el carrito actualizado en localStorage
+      sessionStorage.setItem("cart", JSON.stringify(updatedCart));
+
+      return { cart: updatedCart };
     });
   },
 
-  
-
+  loadCart: () => {
+    const storedCart = JSON.parse(sessionStorage.getItem("cart") || "[]");
+    set({ cart: storedCart });
+  },
 
   removeFromCart: (productId) =>
     set((state) => ({
@@ -78,7 +79,9 @@ export const useProduct = create((set) => ({
   incrementQuantity: (productId) =>
     set((state) => ({
       cart: state.cart.map((item) =>
-        item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
+        item.productId === productId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
       ),
     })),
   decrementQuantity: (productId) =>

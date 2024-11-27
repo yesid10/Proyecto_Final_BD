@@ -23,7 +23,7 @@ const Cart = ({ openCart, handleOpenCart }) => {
     console.log("desde cart");
   };
 
-  const { cart, cantidadComprar, totalPrice, setPriceTotal } = useProduct();
+  const { cart, totalPrice, setPriceTotal, loadCart } = useProduct();
 
 
   const precioTotal = cart?.reduce(
@@ -33,7 +33,12 @@ const Cart = ({ openCart, handleOpenCart }) => {
 
   useEffect(() => {
     setPriceTotal(precioTotal);
-  }, [cart, setPriceTotal]);
+    
+  }, [cart, setPriceTotal, loadCart]);
+
+  useEffect(() => {
+    loadCart();
+  }, [loadCart])
 
   return (
     <Dialog

@@ -166,7 +166,7 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-8">
           <GoHeart className="text-3xl sm:flex hidden cursor-pointer" />
           <FaUserAlt
             onClick={handleOpenSingIn}
@@ -228,7 +228,7 @@ const Navbar = () => {
           <div
             onClick={handleOpenCart}
             variant="gradient"
-            className=" gap-1 items-center justify-center cursor-pointer"
+            className=" flex flex-col gap-1 items-center justify-center cursor-pointer"
           >
             <CiShoppingCart className="text-3xl " />
              <Cart handleOpenCart={handleOpenCart} openCart={openCart}/>
