@@ -11,6 +11,7 @@ export const useProduct = create((set) => ({
     loading: false,
     error: null,
     selectedCategory: "Ruanas",
+    cantidadComprar: 1,
 
     //Acciones
     functionGet: async (endpoint) => {
@@ -41,6 +42,13 @@ export const useProduct = create((set) => ({
     setProductSelected: (product) => {
         set({ productSelected: product });
         sessionStorage.setItem("productSelected", JSON.stringify(product));
+    },
+    setCantidadComprar: (cantidad) => {
+        sessionStorage.removeItem("cart");
+        set({ 
+            cantidadComprar: cantidad,
+            cart: []
+        })
     },
 
     setPriceTotal: (price) => set({ totalPrice: price }),

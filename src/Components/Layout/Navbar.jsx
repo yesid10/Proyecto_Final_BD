@@ -204,7 +204,7 @@ const Navbar = () => {
           >
             <CiShoppingCart className="text-3xl " />
              <Cart handleOpenCart={handleOpenCart} openCart={openCart}/>
-            <span className="sm:flex hidden text-primary_color font-semibold">$ {totalPrice}</span>
+            <span className="sm:flex hidden text-primary_color font-semibold">$ {totalPrice === 0 ? "0.00" : totalPrice}</span>
           </div>
         </div>
       </div>

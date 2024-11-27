@@ -16,6 +16,7 @@ import {
 import { useProduct } from "../../zustand/useProducts";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import CounterCart from "./counter/CounterCart";
 
 const Cart = ({ openCart, handleOpenCart }) => {
   // const [openCart, setOpenCart] = React.useState(false);
@@ -69,6 +70,7 @@ const Cart = ({ openCart, handleOpenCart }) => {
                 </span>
                 <div className="flex w-full justify-between text-primary_color">
                   <span className="">Cantidad <span className="text-colo_text font-medium">{item.quantity}</span></span>
+                  {/* <CounterCart/> */}
                   <span className="">$ {item.precio}</span>
                 </div>
               </div>

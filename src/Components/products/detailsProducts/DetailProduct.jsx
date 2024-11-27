@@ -1,23 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useProduct } from "../../../zustand/useProducts";
-import { CiCirclePlus } from "react-icons/ci";
-import { CiCircleMinus } from "react-icons/ci";
+
 import Swal from "sweetalert2";
+import CounterCart from "../../cart/counter/CounterCart";
 
 const DetailProduct = () => {
-  const { productSelected, addCart } = useProduct();
+  const { productSelected, addCart, cantidadComprar } = useProduct();
   const { productoId, description, imagen_url, nombre, precio, stock } =
     productSelected;
-
-  const [cantidadComprar, setCantidadComprar] = useState(1);
-
-  const incrementQuantity = () => {
-    setCantidadComprar((prev) => prev + 1);
-  };
-
-  const decrementQuantity = () => {
-    setCantidadComprar((prev) => (prev > 1 ? prev - 1 : 1));
-  };
 
   const [position, setPosition] = useState({ x: "50%", y: "50%" });
   const [isZoomed, setIsZoomed] = useState(false);
@@ -76,26 +66,7 @@ const DetailProduct = () => {
           >
             Agregar al carrito
           </button>
-          {cantidadComprar < stock ? (
-            <div className="flex border py-1 rounded-md px-4 justify-center items-center flex-col">
-              <span>Cantidad</span>
-              <div className="flex text-colo_text gap-4 justify-center items-center">
-                <CiCirclePlus
-                  onClick={() => incrementQuantity()}
-                  className="text-3xl cursor-pointer "
-                />
-                {cantidadComprar}
-                <CiCircleMinus
-                  onClick={() => decrementQuantity()}
-                  className="text-3xl cursor-pointer"
-                />
-              </div>
-            </div>
-          ) : (
-            <span className="flex justify-center items-center text-red-300">
-              Productos agotados 😥
-            </span>
-          )}
+          <CounterCart/>
         </div>
       </div>
     </div>
