@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaFacebookF } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
@@ -26,24 +26,34 @@ import { useProduct } from "../../zustand/useProducts";
 import LogoPage from "../logo/LogoPage";
 import { useAuth } from "../../zustand/authUsers";
 import { FcGoogle } from "react-icons/fc";
-
-
-
-
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
-
   const [open, setOpen] = React.useState(false);
   const [openCart, setOpenCart] = React.useState(false);
 
   const { totalPrice } = useProduct();
 
-  const { loginWithGoogle, user, logout } = useAuth();
-  console.log(user)
+  const {
+    loginWithGoogle,
+    user,
+    logout,
+    functionGetUsers,
+    usuarios,
+    dataSinIn,
+    loginWithEmailAndPasswordDb,
+  } = useAuth();
+  // console.log("data sing in", dataSinIn);
+  // console.log(usuarios);
 
-  const [isOpen, setIsOpen] = useState();
+  // const [isOpen, setIsOpen] = useState();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    functionGetUsers("list");
+  }, [functionGetUsers]);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -88,6 +98,40 @@ const Navbar = () => {
       icon: <MdOutlineArrowDropDown />,
     },
   ];
+
+  //Validación de formularios
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {;
+    handleOpenSingIn(); //Cerra modal
+    loginWithEmailAndPasswordDb(data);
+    
+    const user = usuarios.find(
+      (u) => u.email === data.email && u.password === data.password
+    );
+    if (user) {
+      Swal.fire({
+        title: "Good job!",
+        text: "You clicked the button!",
+        icon: "success",
+      });
+
+      loginWithEmailAndPasswordDb(user);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    }
+  };
+
+  // Validacion de usuarios
+ 
 
   return (
     <div>
@@ -150,11 +194,22 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-8">
           <GoHeart className="text-3xl sm:flex hidden cursor-pointer" />
-          {user ? (
+          {user || dataSinIn ? (
             <div className="flex cursor-pointer flex-col group justify-center items-center">
-              <img className="w-12 h-12 rounded-full" src={user.photoURL} alt="" />
-              <span className="text-colo_text">{user.displayName}</span>
-              <button onClick={() => logout()} className="absolute bg-red-300 text-gray-100 px-4 font-medium py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-500 mt-28">Cerrar Sesión</button>
+              <img
+                className="w-12 h-12 rounded-full"
+                src={user?.photoURL ? user?.photoURL : dataSinIn.imageUrl}
+                alt=""
+              />
+              <span className="text-colo_text">
+                {user?.displayName ? user?.displayName : dataSinIn.nombre}
+              </span>
+              <button
+                onClick={() => logout()}
+                className="absolute bg-red-300 text-gray-100 px-4 font-medium py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-500 mt-28"
+              >
+                Cerrar Sesión
+              </button>
             </div>
           ) : (
             <FaUserAlt
@@ -162,7 +217,6 @@ const Navbar = () => {
               className="text-2xl sm:flex hidden cursor-pointer"
             />
           )}
-           
 
           <Dialog
             size="xs"
@@ -171,57 +225,101 @@ const Navbar = () => {
             className="bg-transparent shadow-none"
           >
             <Card className="mx-auto w-full max-w-[24rem]">
-              <CardBody className="flex flex-col gap-4">
-                <Typography variant="h4" color="blue-gray">
-                  Sign In
-                </Typography>
-                <Typography
-                  className="mb-3 font-normal"
-                  variant="paragraph"
-                  color="gray"
-                >
-                  Enter your email and password to Sign In.
-                </Typography>
-                <Typography className="-mb-2" variant="h6">
-                  Your Email
-                </Typography>
-                <Input label="Email" size="lg" />
-                <Typography className="-mb-2" variant="h6">
-                  Your Password
-                </Typography>
-                <Input label="Password" size="lg" />
-                <div className="-ml-2.5 -mt-3">
-                  <Checkbox label="Remember Me" />
-                </div>
-              </CardBody>
-              <CardFooter className="pt-0">
-                <Button variant="gradient" onClick={handleOpenSingIn} fullWidth>
-                  Sign In
-                </Button>
-
-                <button
-                  onClick={() => handleClickedLoginWithGoogle()}
-                  className="flex bg-colo_text px-2 py-2 rounded-lg font-medium hover:scale-95 transition-all duration-300 text-gray-200 w-full justify-center items-center mt-5 gap-5"
-                >
-                  <FcGoogle className="text-xl" /> Hazlo con google
-                </button>
-                <Typography
-                  variant="small"
-                  className="mt-4 flex justify-center"
-                >
-                  Don&apos;t have an account?
-                  <Typography
-                    as="a"
-                    href="#signup"
-                    variant="small"
-                    color="blue-gray"
-                    className="ml-1 font-bold"
-                    onClick={handleOpenSingIn}
-                  >
-                    Sign up
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <CardBody className="flex flex-col gap-4">
+                  <Typography variant="h4" color="blue-gray">
+                    Inicio de sesión
                   </Typography>
-                </Typography>
-              </CardFooter>
+                  <Typography
+                    className="mb-3 font-normal"
+                    variant="paragraph"
+                    color="gray"
+                  >
+                    Ingrese su correo y su contraseña.
+                  </Typography>
+
+                  {/* Email */}
+                  <Typography className="-mb-2" variant="h6">
+                    Email
+                  </Typography>
+                  <Input
+                    label="Email"
+                    size="lg"
+                    {...register("email", {
+                      required: "El correo es obligatorio",
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Formato de correo inválido",
+                      },
+                    })}
+                  />
+                  {errors.email && (
+                    <Typography variant="small" color="red">
+                      {errors.email.message}
+                    </Typography>
+                  )}
+
+                  {/* Contraseña */}
+                  <Typography className="-mb-2" variant="h6">
+                    Contraseña
+                  </Typography>
+                  <Input
+                    label="Contraseña"
+                    type="password"
+                    size="lg"
+                    {...register("password", {
+                      required: "La contraseña es obligatoria",
+                      minLength: {
+                        value: 6,
+                        message: "Debe tener al menos 6 caracteres",
+                      },
+                    })}
+                  />
+                  {errors.password && (
+                    <Typography variant="small" color="red">
+                      {errors.password.message}
+                    </Typography>
+                  )}
+
+                  {/* Remember Me */}
+                  <div className="-ml-2.5 -mt-3">
+                    <Checkbox label="Remember Me" {...register("rememberMe")} />
+                  </div>
+                </CardBody>
+
+                <CardFooter className="pt-0">
+                  {/* Submit */}
+                  <Button variant="gradient" fullWidth type="submit">
+                    Sign In
+                  </Button>
+
+                  {/* Login con Google */}
+                  <button
+                    onClick={() => handleClickedLoginWithGoogle()}
+                    className="flex bg-colo_text px-2 py-2 rounded-lg font-medium hover:scale-95 transition-all duration-300 text-gray-200 w-full justify-center items-center mt-5 gap-5"
+                  >
+                    <FcGoogle className="text-xl" /> Hazlo con Google
+                  </button>
+
+                  {/* Link para registrarse */}
+                  <Typography
+                    variant="small"
+                    className="mt-4 flex justify-center"
+                  >
+                    Don&apos;t have an account?
+                    <Typography
+                      as="a"
+                      href="#signup"
+                      variant="small"
+                      color="blue-gray"
+                      className="ml-1 font-bold"
+                      onClick={handleOpenSingIn}
+                    >
+                      Sign up
+                    </Typography>
+                  </Typography>
+                </CardFooter>
+              </form>
             </Card>
           </Dialog>
           <div

@@ -17,7 +17,7 @@ const AppRouter = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("useer dessde approuer",user)
+        // console.log("useer dessde approuer",user)
         setUser(user);
         setIsAuthenticated(true);
       } else {
