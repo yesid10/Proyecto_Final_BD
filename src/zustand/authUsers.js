@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { auth, provider, signInWithPopup,  } from "../firebase/firebase.config";
+import { auth, provider, signInWithPopup, signOut,  } from "../firebase/firebase.config";
 import Swal from "sweetalert2";
 
 export const useAuth = create((set) => ({
@@ -11,6 +11,7 @@ export const useAuth = create((set) => ({
     loginWithGoogle: async () => {
         try {
             const result = await signInWithPopup(auth, provider);
+            console.log("desde zustand", result.user)
             
             set({
                 user: result.user,
@@ -30,4 +31,30 @@ export const useAuth = create((set) => ({
 
     setUser: (user) => set({ user }),
     setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
+
+
+    logout: async () => {
+        try {
+          await signOut(auth);
+          set({
+            user: null,
+            isAuthenticated: false,
+          });
+    
+          Swal.fire({
+            title: "Sesión cerrada",
+            text: "Has cerrado sesión correctamente.",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+        } catch (error) {
+          console.error("Error al cerrar sesión", error);
+          Swal.fire({
+            title: "Error!",
+            text: "No se pudo cerrar sesión.",
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+        }
+      },
 })) 

@@ -27,14 +27,19 @@ import LogoPage from "../logo/LogoPage";
 import { useAuth } from "../../zustand/authUsers";
 import { FcGoogle } from "react-icons/fc";
 
+
+
+
+
 const Navbar = () => {
+
   const [open, setOpen] = React.useState(false);
   const [openCart, setOpenCart] = React.useState(false);
 
   const { totalPrice } = useProduct();
 
-  const { loginWithGoogle, user } = useAuth();
-  console.log("Logueado y mostrado desde el nav", user)
+  const { loginWithGoogle, user, logout } = useAuth();
+  console.log(user)
 
   const [isOpen, setIsOpen] = useState();
 
@@ -60,7 +65,7 @@ const Navbar = () => {
   const handleClickedLoginWithGoogle = () => {
     handleOpenSingIn();
     loginWithGoogle();
-  }
+  };
   const navigationPages = [
     {
       id: 1,
@@ -145,10 +150,20 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-8">
           <GoHeart className="text-3xl sm:flex hidden cursor-pointer" />
-          <FaUserAlt
-            onClick={handleOpenSingIn}
-            className="text-2xl sm:flex hidden cursor-pointer"
-          />
+          {user ? (
+            <div className="flex cursor-pointer flex-col group justify-center items-center">
+              <img className="w-12 h-12 rounded-full" src={user.photoURL} alt="" />
+              <span className="text-colo_text">{user.displayName}</span>
+              <button onClick={() => logout()} className="absolute bg-red-300 text-gray-100 px-4 font-medium py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-500 mt-28">Cerrar Sesión</button>
+            </div>
+          ) : (
+            <FaUserAlt
+              onClick={handleOpenSingIn}
+              className="text-2xl sm:flex hidden cursor-pointer"
+            />
+          )}
+           
+
           <Dialog
             size="xs"
             open={open}
@@ -184,7 +199,10 @@ const Navbar = () => {
                   Sign In
                 </Button>
 
-                <button onClick={() => handleClickedLoginWithGoogle()} className="flex bg-colo_text px-2 py-2 rounded-lg font-medium hover:scale-95 transition-all duration-300 text-gray-200 w-full justify-center items-center mt-5 gap-5">
+                <button
+                  onClick={() => handleClickedLoginWithGoogle()}
+                  className="flex bg-colo_text px-2 py-2 rounded-lg font-medium hover:scale-95 transition-all duration-300 text-gray-200 w-full justify-center items-center mt-5 gap-5"
+                >
                   <FcGoogle className="text-xl" /> Hazlo con google
                 </button>
                 <Typography
