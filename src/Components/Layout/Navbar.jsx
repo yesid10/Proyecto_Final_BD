@@ -80,21 +80,25 @@ const Navbar = () => {
     {
       id: 1,
       page: "HOME",
+      href: "/",
       icon: <MdOutlineArrowDropDown />,
     },
     {
       id: 2,
       page: "PRODUCTOS",
+      href: "productos",
       icon: <MdOutlineArrowDropDown />,
     },
     {
       id: 3,
       page: "CARRITO",
+      href: "carrito",
       icon: <MdOutlineArrowDropDown />,
     },
     {
       id: 4,
       page: "CONTACTO",
+      href: "",
       icon: <MdOutlineArrowDropDown />,
     },
   ];
@@ -104,6 +108,7 @@ const Navbar = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm();
 
   const onSubmit = (data) => {;
@@ -128,6 +133,7 @@ const Navbar = () => {
         text: "Something went wrong!",
       });
     }
+    reset();
   };
 
   // Validacion de usuarios
@@ -343,7 +349,7 @@ const Navbar = () => {
           </li>
           {navigationPages.map((item) => (
             <li
-              onClick={() => navigatePages(item.page)}
+              onClick={() => navigatePages(item.href)}
               className="flex text-colo_text text-sm font-light  hover:font-medium transition-all duration-500 justify-center items-center gap-4 cursor-pointer"
               key={item.id}
             >

@@ -10,6 +10,7 @@ import { useAuth } from "../zustand/authUsers";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 import RutaPortegida from "./routePortect/RutaPortegida";
+import AgregarProducto from "../Components/addProductos/AgregarProducto";
 
 const AppRouter = () => {
   const { setUser, setIsAuthenticated } = useAuth();
@@ -43,6 +44,7 @@ const AppRouter = () => {
               element={<DetailProduct />}
             />
             <Route path="/carrito" element={<DetailCart />} />
+            <Route path="/add-product" element={<AgregarProducto/>}/>
           </Route>
         </Route>
       </Routes>

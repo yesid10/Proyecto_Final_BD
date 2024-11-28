@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../zustand/authUsers.js";
 
 const Products = () => {
-  const { productos, functionGet, setProductSelected } = useProduct();
+  const { productos, functionGet, setProductSelected, functionGetProducts } = useProduct();
 
   const { dataSinIn } = useAuth();
 
@@ -13,51 +13,16 @@ const Products = () => {
   };
 
   useEffect(() => {
-    functionGet("list");
-  }, [functionGet]);
-  // const products = [
-  //     {
-  //       id: 1,
-  //       name: 'Earthen Bottle',
-  //       href: '#',
-  //       price: '$48',
-  //       imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-01.jpg',
-  //       imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-  //     },
-  //     {
-  //       id: 2,
-  //       name: 'Nomad Tumbler',
-  //       href: '#',
-  //       price: '$35',
-  //       imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-02.jpg',
-  //       imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-  //     },
-  //     {
-  //       id: 3,
-  //       name: 'Focus Paper Refill',
-  //       href: '#',
-  //       price: '$89',
-  //       imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-03.jpg',
-  //       imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-  //     },
-  //     {
-  //       id: 4,
-  //       name: 'Machined Mechanical Pencil',
-  //       href: '#',
-  //       price: '$35',
-  //       imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-04.jpg',
-  //       imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-  //     },
-  //     // More products...
-  //   ]
+    functionGetProducts();
+  }, []);
 
   return (
     <>
       {dataSinIn?.rol === "ADMIN" && (
         <div className="flex my-5 mr-[11%] justify-end items-center ">
-          <button className="px-3 flex items-center rounded-lg text-gray-300 font-medium hover:scale-95 transition-all duration-300 justify-center py-3 bg-primary_color">
+          <Link to="/add-product" className="px-3 flex items-center rounded-lg text-gray-300 font-medium hover:scale-95 transition-all duration-300 justify-center py-3 bg-primary_color">
             Agregar producto
-          </button>
+          </Link>
         </div>
       )}
 

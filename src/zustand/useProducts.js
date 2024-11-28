@@ -27,7 +27,7 @@ export const useProduct = create((set) => ({
             const response = await axios.get(`${URL_API}${endpoint}`);
             set({
                 categories: response.data,
-                productos: response.data.flatMap((product) => product.products),
+                // productos: response.data.flatMap((product) => product.products),
                 loading: false,
             });
         } catch (error) {
@@ -35,6 +35,48 @@ export const useProduct = create((set) => ({
                 loading: false,
                 error: error.message,
             });
+        }
+    },
+
+    functionGetProducts: async () => {
+        const URL_API_Products = "http://localhost:8080/api/v1/products/list";
+
+        set({
+            loading: true,
+            error: null,
+        });
+
+        try {
+            const response = await axios.get(`${URL_API_Products}`);
+            console.log(response.data)
+            set({
+                productos: response.data,
+                loading: false,
+            });
+        } catch (error) {
+            set({
+                loading: false,
+                error: error.message,
+            });
+        }
+    },
+    addProduct: async(productData) => {
+        set({loading: true, error: null});
+
+        const URL = "http://localhost:8080/api/v1/products/save"
+        try {
+            const response = await axios.post(`${URL}`, productData);
+            console.log("respuesta de post", response.data);
+
+            set((state) => ({
+                productos: [...state.productos, response.data],
+                loading: false,
+            }))
+        } catch (error) {
+            set({
+                error: error.message,
+                loading: false,
+            })
         }
     },
 
