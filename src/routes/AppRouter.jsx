@@ -36,7 +36,7 @@ const AppRouter = () => {
         <Route element={<LayoutComponent />}>
           {/* Ruta pública */}
           <Route path="/" element={<Home />} />
-          <Route path="/acceso-denegado" element={<AccesoDenet/>}/>
+          {/* <Route path="/acceso-denegado" element={<AccesoDenet/>}/> */}
 
           {/* Ruta protegida */}
           <Route element={<RutaPortegida />}>

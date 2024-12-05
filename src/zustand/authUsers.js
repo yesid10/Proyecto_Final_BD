@@ -7,6 +7,7 @@ import {
 } from "../firebase/firebase.config";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useAccordion } from "@material-tailwind/react";
 
 export const useAuth = create((set) => ({
   //Estaos iniciales
@@ -24,17 +25,18 @@ export const useAuth = create((set) => ({
       const result = await signInWithPopup(auth, provider);
       console.log("desde zustand", result.user);
 
+      Swal.fire({
+        title: `Hola ${result.user.displayName}`,  
+        text: "Bienvenid@",
+        icon: "success",
+        confirmButtonText: "OK",
+      })
+
       set({
         user: result.user,
         isAuthenticated: true,
       });
 
-      Swal.fire({
-        title: `Hola ${user.displayName}`,  
-        text: "Bienvenid@",
-        icon: "success",
-        confirmButtonText: "OK",
-      })
       
     } catch (error) {
       console.log("Error al iniciar sesion", error);
@@ -52,28 +54,32 @@ export const useAuth = create((set) => ({
 
   logout: async () => {
     try {
-      await signOut(auth);
-      set({
-        user: null,
-        isAuthenticated: false,
-      });
+        await signOut(auth);
+        set({
+            user: null,
+            isAuthenticated: false,
+        });
 
-      Swal.fire({
-        title: "Sesión cerrada",
-        text: "Has cerrado sesión correctamente.",
-        icon: "success",
-        confirmButtonText: "OK",
-      });
+        Swal.fire({
+            title: "Sesión cerrada",
+            text: "Has cerrado sesión correctamente.",
+            icon: "success",
+            confirmButtonText: "OK",
+        }).then(() => {
+            // Recargar la página después de cerrar sesión
+            window.location.reload();
+        });
     } catch (error) {
-      console.error("Error al cerrar sesión", error);
-      Swal.fire({
-        title: "Error!",
-        text: "No se pudo cerrar sesión.",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
+        console.error("Error al cerrar sesión", error);
+        Swal.fire({
+            title: "Error!",
+            text: "No se pudo cerrar sesión.",
+            icon: "error",
+            confirmButtonText: "OK",
+        });
     }
-  },
+},
+
 
   functionGetUsers: async (endpoint) => {
     const URL_API = "http://localhost:8080/api/v1/usuarios/";
@@ -129,5 +135,54 @@ export const useAuth = create((set) => ({
     }
   },
 
+  addUser: async (userData, navigate) => {
+
+    set({ loading: true, error: null });
   
+    const URL = "http://localhost:8080/api/v1/usuarios/save";
+    try {
+      const response = await axios.post(`${URL}`, userData);
+      console.log("Respuesta de post", response.data);
+  
+      set((state) => ({
+        usuarios: [...state.usuarios, response.data],
+        loading: false,
+      }));
+  
+      // SweetAlert de éxito
+      Swal.fire({
+        title: "Usuario agregado exitosamente",
+        text: "El usuario se ha agregado correctamente.",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        navigate("/admin")
+      });
+    
+    } catch (error) {
+      set({
+        error: error.message,
+        loading: false,
+      });
+  
+      // SweetAlert de error
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un problema al agregar el producto. Inténtalo nuevamente.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
+  },
+  
+
+  removeUser: (userId) =>
+  set((state) => {
+    const updateUser = state.usuarios.filter(
+      (item) => item.usuarioId !== userId
+    );
+
+    // sessionStorage.setItem("cart", JSON.stringify(updateCart));
+    return { usuarios: updateUser };
+  }),
 }));

@@ -11,9 +11,9 @@ const RutaPortegida = () => {
     return <Navigate to="/" replace />;
   }
 
-  if (dataSinIn?.rol !== 'ADMIN') {
-    return <Navigate to="/acceso-denegado" replace />;
-  }
+  // if (dataSinIn?.rol !== 'ADMIN') {
+  //   return <Navigate to="/acceso-denegado" replace />;
+  // }
 
 
   return <Outlet />;
