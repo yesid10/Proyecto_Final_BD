@@ -1,6 +1,6 @@
-const withMT = require("@material-tailwind/react/utils/withMT");
+import withMT from "@material-tailwind/react/utils/withMT";
 
-module.exports = withMT({
+export default withMT({
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -16,14 +16,14 @@ module.exports = withMT({
         titles_color: "#1A3636"
       },
     },
-    keyframes:{
-      slideInFromRight:{
-        '0%': {transform: 'translateX(100%)', opacity: '0'},
-        '100%': {transform: 'translateX(0)', opacity: '1'}
+    keyframes: {
+      slideInFromRight: {
+        '0%': { transform: 'translateX(100%)', opacity: '0' },
+        '100%': { transform: 'translateX(0)', opacity: '1' }
       }
     },
-    animation:{
-      'slide-in-right':'slideInFromRight .7s ease-out',
+    animation: {
+      'slide-in-right': 'slideInFromRight .7s ease-out',
     }
   },
   plugins: [],
