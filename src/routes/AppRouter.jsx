@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../Components/Home/Home";
 import Products from "../Components/products/Products";
 import LayoutComponent from "../Components/Layout/LayoutComponent";
-import { ThemeProvider } from "@material-tailwind/react";
 import DetailProduct from "../Components/products/detailsProducts/DetailProduct";
 import DetailCart from "../Components/cart/detailCart/DetailCart";
 import { useAuth } from "../zustand/authUsers";
@@ -11,6 +10,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 import RutaPortegida from "./routePortect/RutaPortegida";
 import AgregarProducto from "../Components/addProductos/AgregarProducto";
+import AccesoDenet from "../Components/accesoDenegado/AccesoDenet";
+import AdminPage from "../Components/admin/AdminPage";
 
 const AppRouter = () => {
   const { setUser, setIsAuthenticated } = useAuth();
@@ -35,6 +36,7 @@ const AppRouter = () => {
         <Route element={<LayoutComponent />}>
           {/* Ruta pública */}
           <Route path="/" element={<Home />} />
+          <Route path="/acceso-denegado" element={<AccesoDenet/>}/>
 
           {/* Ruta protegida */}
           <Route element={<RutaPortegida />}>
@@ -44,8 +46,9 @@ const AppRouter = () => {
               element={<DetailProduct />}
             />
             <Route path="/carrito" element={<DetailCart />} />
-            <Route path="/add-product" element={<AgregarProducto/>}/>
+            <Route path="/add-product" element={<AgregarProducto />} />
           </Route>
+            <Route path="/admin" element={<AdminPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

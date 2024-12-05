@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useProduct } from "../../zustand/useProducts";
+import { useNavigate } from "react-router-dom";
 
 const AgregarProducto = () => {
-  const { categories, addProduct, functionGetProducts } = useProduct();
+
+  const navigate = useNavigate();
+  // Desestructuramos las funciones y variables necesarias desde el estado global de productos
+  const { categories, addProduct, functionGetProducts, productToEdit, updateProduct } = useProduct();
+
+  // Configuración de react-hook-form para manejar el formulario
   const {
     register,
     handleSubmit,
@@ -11,33 +17,62 @@ const AgregarProducto = () => {
     reset,
   } = useForm();
 
-  //Objeto paar enviar al backend
-  const prepareDataFroBackend = (formData, categoriId) => {
-    const productData = {
-        categoriaId: categoriId,
-        nombre: formData.nombre,
-        description: formData.descripcion,
-        precio: parseFloat(formData.precio),
-        imagen_url: formData.imagen_url,
-        stock: parseInt(formData.stock),
-    }
-    return productData;
+  // Si hay un producto a editar, inicializamos el formulario con esos datos
+useEffect(() => {
+  if (productToEdit) {
+    reset({
+      nombre: productToEdit.nombre,
+      precio: productToEdit.precio,
+      descripcion: productToEdit.description,
+      imagen_url: productToEdit.imagen_url,
+      stock: productToEdit.stock,
+      categoria: productToEdit.categoriaId, // Usa categoriaId para inicializar
+    });
   }
+}, [productToEdit, reset]);
+
+  // Preparar los datos para enviar al backend
+  const prepareDataForBackend = (formData) => {
+    console.log("Fromdata", formData)
+    const productData = {
+      // categoriaId: parseInt(formData.categoria),
+      nombre: formData.nombre,
+      description: formData.descripcion,
+      precio: parseFloat(formData.precio),
+      imagen_url: formData.imagen_url,
+      stock: parseInt(formData.stock),
+    };
+    return productData;
+  };
+
 
   // Función para manejar el envío del formulario
   const onSubmit = async (data) => {
-    console.log("Producto agregado:", data);
-    const categoriaId = categories.find(cat => cat.nombre === data.categoria )
 
-    await addProduct(prepareDataFroBackend(data, categoriaId))
-    functionGetProducts();
-    // reset(); // Resetea el formulario después de enviarlo
+    console.log(prepareDataForBackend(data))
+
+    
+    // const categoriaId = categories.find(cat => cat.nombre === data.categoria);
+    console.log("Categoria id", data)
+
+    //Si hay un producto a editar, actualizamos el producto, si no, lo agregamos
+    if (productToEdit) {
+      console.log("Producto enviado para editar:", data);
+      // Si hay un producto a editar, actualiza el producto
+      await updateProduct(productToEdit.productoId, prepareDataForBackend(data), navigate);
+    } else {
+      // Si no hay un producto a editar, agrega un nuevo producto
+      await addProduct(prepareDataForBackend(data), navigate);
+    }
+
+    functionGetProducts(); // Actualiza la lista de productos
+    reset(); // Resetea el formulario después de enviarlo
   };
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-5 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-semibold text-gray-700 mb-5">
-        Agregar Producto
+        {productToEdit ? "Editar Producto" : "Agregar Producto"}
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -56,7 +91,7 @@ const AgregarProducto = () => {
           >
             <option value="">Selecciona una categoría</option>
             {categories.map((categoria) => (
-              <option key={categoria.categoriaId} value={categoria.id}>
+              <option key={categoria.categoriaId} defaultValue={productToEdit?.categoriaId} value={categoria.categoriaId}>
                 {categoria.nombre}
               </option>
             ))}
@@ -167,7 +202,7 @@ const AgregarProducto = () => {
             type="submit"
             className="w-full px-4 py-2 bg-primary_color text-white rounded-md hover:bg-colo_text hover:scale-95 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-colo_text"
           >
-            Agregar Producto
+            {productToEdit ? "Editar Producto" : "Agregar Producto"}
           </button>
         </div>
       </form>

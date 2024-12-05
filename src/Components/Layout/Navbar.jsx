@@ -43,11 +43,13 @@ const Navbar = () => {
     usuarios,
     dataSinIn,
     loginWithEmailAndPasswordDb,
+   
   } = useAuth();
   // console.log("data sing in", dataSinIn);
   // console.log(usuarios);
 
   // const [isOpen, setIsOpen] = useState();
+
 
   const navigate = useNavigate();
 
@@ -118,20 +120,25 @@ const Navbar = () => {
     const user = usuarios.find(
       (u) => u.email === data.email && u.password === data.password
     );
+
+    console.log("user desde navber",user)
     if (user) {
       Swal.fire({
         title: "Good job!",
         text: "You clicked the button!",
         icon: "success",
       });
+      
 
       loginWithEmailAndPasswordDb(user);
     } else {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Something went wrong!",
+        text: "Usuario o contraseña incorrectos",
       });
+      
+      loginWithEmailAndPasswordDb(null);
     }
     reset();
   };

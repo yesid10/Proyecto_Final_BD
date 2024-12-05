@@ -16,6 +16,7 @@ export const useAuth = create((set) => ({
   loading: false,
   usuarios: [],
   dataSinIn: null,
+  rol: null,
 
   //Acciones
   loginWithGoogle: async () => {
@@ -27,6 +28,14 @@ export const useAuth = create((set) => ({
         user: result.user,
         isAuthenticated: true,
       });
+
+      Swal.fire({
+        title: `Hola ${user.displayName}`,  
+        text: "Bienvenid@",
+        icon: "success",
+        confirmButtonText: "OK",
+      })
+      
     } catch (error) {
       console.log("Error al iniciar sesion", error);
       Swal.fire({
@@ -89,5 +98,36 @@ export const useAuth = create((set) => ({
     }
   },
 
-  loginWithEmailAndPasswordDb: (data) => set({dataSinIn: data, isAuthenticated: true})
+  loginWithEmailAndPasswordDb: (data) => set({dataSinIn: data, isAuthenticated: true}),
+
+  editUser: async (userId, updatedUser) => {
+    const URL_API = `http://localhost:8080/api/v1/usuarios/edit/${userId}`;
+    
+    try {
+      const response = await axios.put(URL_API, updatedUser); // Enviar solicitud PUT a la API
+      // Actualizar el estado con la información modificada
+      set((state) => ({
+        usuarios: state.usuarios.map((user) =>
+          user.usuarioId === userId ? { ...user, ...updatedUser } : user
+        ),
+      }));
+
+      Swal.fire({
+        title: "Usuario actualizado",
+        text: "Los datos del usuario se han actualizado correctamente.",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+    } catch (error) {
+      console.error("Error al editar el usuario:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "No se pudo actualizar el usuario.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
+  },
+
+  
 }));

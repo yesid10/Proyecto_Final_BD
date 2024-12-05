@@ -1,8 +1,9 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { create } from "zustand";
 
-export const useProduct = create((set) => ({
+export const useProduct = create((set, get) => ({
   //Estados iniciales
   productos: [],
   cart: [],
@@ -14,6 +15,9 @@ export const useProduct = create((set) => ({
   error: null,
   selectedCategory: "Ruanas",
   cantidadComprar: 1,
+  productToEdit: null,
+
+  setProductToEdit: (product) => set({ productToEdit: product }),
 
   //Acciones
   functionGet: async (endpoint) => {
@@ -61,22 +65,45 @@ export const useProduct = create((set) => ({
       });
     }
   },
-  addProduct: async (productData) => {
-    set({ loading: true, error: null });
+ 
+  addProduct: async (productData, navigate) => {
 
+    const { functionGetProducts } = get();
+    set({ loading: true, error: null });
+  
     const URL = "http://localhost:8080/api/v1/products/save";
     try {
       const response = await axios.post(`${URL}`, productData);
-      console.log("respuesta de post", response.data);
-
+      console.log("Respuesta de post", response.data);
+  
       set((state) => ({
         productos: [...state.productos, response.data],
         loading: false,
       }));
+  
+      // SweetAlert de éxito
+      Swal.fire({
+        title: "Producto agregado",
+        text: "El producto se ha agregado correctamente.",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        functionGetProducts();
+        navigate("/productos")
+      });
+    
     } catch (error) {
       set({
         error: error.message,
         loading: false,
+      });
+  
+      // SweetAlert de error
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un problema al agregar el producto. Inténtalo nuevamente.",
+        icon: "error",
+        confirmButtonText: "OK",
       });
     }
   },
@@ -143,15 +170,6 @@ export const useProduct = create((set) => ({
     set({ cart: [] }); // Limpia el carrito
   },
 
-//   removeFromProducts: (productId) =>
-//     set((state) => {
-//       const updateProducts = state.productos.filter(
-//         (item) => item.productoId !== productId
-//       );
-
-//       return { productos: updateProducts };
-//     }),
-
   removeFromProducts: (productId) => {
     Swal.fire({
       title: "¿Estás seguro?",
@@ -174,4 +192,45 @@ export const useProduct = create((set) => ({
       }
     });
   },
+
+  updateProduct: async (productId, updatedProductData, navigate) => {
+
+    set({ loading: true, error: null });
+  
+    const URL = `http://localhost:8080/api/v1/products/edit/${productId}`;
+    try {
+      const response = await axios.put(URL, updatedProductData);
+      console.log("Respuesta de actualización", response.data);
+  
+      set((state) => {
+        const updatedProducts = state.productos.map((product) =>
+          product.productoId === productId ? { ...product, ...response.data } : product
+        );
+  
+        return {
+          productos: updatedProducts,
+          loading: false,
+        };
+      });
+  
+      Swal.fire({
+        title: "Producto actualizado",
+        text: "El producto se ha actualizado correctamente.",
+        icon: "success",
+      }).then(() => {
+        navigate("/")
+      });
+    } catch (error) {
+      set({
+        error: error.message,
+        loading: false,
+      });
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un problema al actualizar el producto.",
+        icon: "error",
+      });
+    }
+  },
+  
 }));
