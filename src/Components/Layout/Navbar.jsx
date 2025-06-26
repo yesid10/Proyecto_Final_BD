@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaFacebookF } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
@@ -28,6 +28,7 @@ import { useAuth } from "../../zustand/authUsers";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { Select, Option } from "@material-tailwind/react";
 
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
@@ -43,13 +44,11 @@ const Navbar = () => {
     usuarios,
     dataSinIn,
     loginWithEmailAndPasswordDb,
-   
   } = useAuth();
   // console.log("data sing in", dataSinIn);
   // console.log(usuarios);
 
   // const [isOpen, setIsOpen] = useState();
-
 
   const navigate = useNavigate();
 
@@ -110,25 +109,24 @@ const Navbar = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm();
 
-  const onSubmit = (data) => {;
+  const onSubmit = (data) => {
     handleOpenSingIn(); //Cerra modal
     loginWithEmailAndPasswordDb(data);
-    
+
     const user = usuarios.find(
       (u) => u.email === data.email && u.password === data.password
     );
 
-    console.log("user desde navber",user)
+    console.log("user desde navber", user);
     if (user) {
       Swal.fire({
         title: "Good job!",
         text: "You clicked the button!",
         icon: "success",
       });
-      
 
       loginWithEmailAndPasswordDb(user);
     } else {
@@ -137,14 +135,35 @@ const Navbar = () => {
         title: "Oops...",
         text: "Usuario o contraseña incorrectos",
       });
-      
+
       loginWithEmailAndPasswordDb(null);
     }
     reset();
   };
 
+  const [selectedRegion, setSelectedRegion] = useState("Europe");
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const toggleDropdown = () => setIsOpen(!isOpen);
+
+  const handleOptionClick = (value) => {
+    setSelectedRegion(value);
+    setIsOpen(false);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
   // Validacion de usuarios
- 
 
   return (
     <div>
@@ -174,7 +193,7 @@ const Navbar = () => {
           <div className="group flex h-20 w-20 cursor-pointer items-center justify-center rounded-3xl bg-white p-2 hover:bg-slate-200">
             <div className="space-y-2">
               <span className="block h-1 w-10 origin-center rounded-full bg-primary_color transition-transform ease-in-out group-hover:translate-y-1.5 group-hover:rotate-45"></span>
-              <span className="block h-1 w-8 origin-center rounded-full bg-secondary_color transition-transform ease-in-out group-hover:w-10 group-hover:-translate-y-1.5 group-hover:-rotate-45"></span>
+              <span className="block h-1 w-8 origin-center rounded-full bg-primary_color transition-transform ease-in-out group-hover:w-10 group-hover:-translate-y-1.5 group-hover:-rotate-45"></span>
               <span className="block h-1 w-6 origin-center rounded-full bg-primary_color transition-transform ease-in-out group-hover:hidden"></span>
             </div>
           </div>
@@ -182,27 +201,74 @@ const Navbar = () => {
 
         <div className="sm:flex hidden items-center  gap-[8%] ">
           <LogoPage />
-          <div className="flex">
-            <select className="border-2 rounded-sm py-2" name="" id="">
-              <option value="">Colecciones</option>
-              <option value="">PC</option>
-              <option value="">Celulares</option>
-              <option value="">PC</option>
-              <option value="">Celulares</option>
-              <option value="">PC</option>
-              <option value="">Celulares</option>
-              <option value="">PC</option>
-              <option value="">Celulares</option>
-              <option value="">PC</option>
-            </select>
-            <input
-              className=" w-[100%] border-2 py-2 pr-60 focus:outline-none focus:border-primary_color focus:ring-primary_color"
-              type="text"
-              placeholder="Buscar colección"
-            />
-            <button className="flex px-3 items-center border justify-center bg-primary_color">
-              <FaSearch className="text-white font-semibold" />
-            </button>
+          <div className="w-full max-w-sm min-w-[200px]">
+            <div className="relative mt-2" ref={dropdownRef}>
+              <div className="absolute top-1 left-1 flex items-center">
+                <button
+                  onClick={toggleDropdown}
+                  className="rounded border border-transparent py-1 px-1.5 text-center flex items-center text-sm transition-all text-slate-600"
+                >
+                  <span className="text-ellipsis overflow-hidden">
+                    {selectedRegion}
+                  </span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="h-4 w-4 ml-1"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                    />
+                  </svg>
+                </button>
+                <div className="h-6 border-l border-slate-200 ml-1"></div>
+
+                {isOpen && (
+                  <div className="min-w-[150px] overflow-hidden absolute left-0 w-full mt-10 bg-white border border-slate-200 rounded-md shadow-lg z-10">
+                    <ul>
+                      {["Europe", "Australia", "Africa"].map((region) => (
+                        <li
+                          key={region}
+                          className="px-4 py-2 text-slate-600 hover:bg-slate-50 text-sm cursor-pointer"
+                          onClick={() => handleOptionClick(region)}
+                        >
+                          {region}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              <input
+                type="text"
+                placeholder="Germany..."
+                className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pr-12 pl-28 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+              />
+
+              <button
+                className="absolute right-1 top-1 rounded bg-primary_color p-1.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-8">

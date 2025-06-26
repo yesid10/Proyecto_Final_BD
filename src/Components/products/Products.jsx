@@ -88,7 +88,7 @@ const Products = () => {
                     <img
                       alt={product.nombre}
                       src={product.imagen_url}
-                      className="w-full object-contain object-center group-hover:opacity-15"
+                      className="w-full h-64 object-cover group-hover:opacity-75"
                     />
                   </div>
                   <h3 className="mt-4 text-sm text-colo_text">
