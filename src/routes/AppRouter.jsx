@@ -12,6 +12,7 @@ import RutaPortegida from "./routePortect/RutaPortegida";
 import AgregarProducto from "../Components/addProductos/AgregarProducto";
 import AccesoDenet from "../Components/accesoDenegado/AccesoDenet";
 import AdminPage from "../Components/admin/AdminPage";
+import Contact from "../pages/Contact";
 
 const AppRouter = () => {
   const { setUser, setIsAuthenticated } = useAuth();
@@ -36,11 +37,12 @@ const AppRouter = () => {
         <Route element={<LayoutComponent />}>
           {/* Ruta pública */}
           <Route path="/" element={<Home />} />
+          <Route path="/productos" element={<Products />} />
+          <Route path="/contact" element={<Contact />} />
           {/* <Route path="/acceso-denegado" element={<AccesoDenet/>}/> */}
 
           {/* Ruta protegida */}
           <Route element={<RutaPortegida />}>
-            <Route path="/productos" element={<Products />} />
             <Route
               path="/detalles-producto/:producto"
               element={<DetailProduct />}
@@ -48,7 +50,7 @@ const AppRouter = () => {
             <Route path="/carrito" element={<DetailCart />} />
             <Route path="/add-product" element={<AgregarProducto />} />
           </Route>
-            <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
