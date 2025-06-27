@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaFacebookF } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa6";
@@ -33,6 +33,7 @@ import { LiaPersonBoothSolid } from "react-icons/lia";
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
   const [openCart, setOpenCart] = React.useState(false);
+  const location = useLocation();
 
   const { totalPrice } = useProduct();
 
@@ -45,10 +46,6 @@ const Navbar = () => {
     dataSinIn,
     loginWithEmailAndPasswordDb,
   } = useAuth();
-  // console.log("data sing in", dataSinIn);
-  // console.log(usuarios);
-
-  // const [isOpen, setIsOpen] = useState();
 
   const navigate = useNavigate();
 
@@ -417,17 +414,17 @@ const Navbar = () => {
 
       <div className="md:flex hidden bg-secondary_color text-white py-5">
         <ul className="flex w-full font-semibold justify-center gap-20">
-          <Link to={"/artesanos"} className="flex text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer">
+          <Link to={"/artesanos"} className={`flex ${location.pathname === `/${"artesanos"}` ? "bg-colo_text text-secondary_color" : "" } text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer`}>
             <LiaPersonBoothSolid className="text-xl"/> ARTESANOS
           </Link>
-          <li className="flex text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer">
+          <li className={`flex ${location.pathname === `/${"colecciones"}` ? "bg-colo_text text-secondary_color" : ""} text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer`}>
             <CiMenuFries /> COLECCIONES
           </li>
 
           {navigationPages.map((item) => (
             <li
               onClick={() => navigatePages(item.href)}
-              className="flex text-colo_text text-sm px-4 py-2 font-semibold rounded hover:bg-primary_color hover:text-secondary_color  hover:font-medium transition-all duration-300 justify-center items-center gap-4 cursor-pointer"
+              className={`flex ${location.pathname === `/${item.href}` ? "bg-colo_text text-secondary_color" : ""} text-colo_text text-sm px-4 py-2 font-semibold rounded hover:bg-colo_text hover:text-secondary_color  hover:font-medium transition-all duration-300 justify-center items-center gap-4 cursor-pointer`}
               key={item.id}
             >
               {item.page}
