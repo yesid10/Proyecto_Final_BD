@@ -163,8 +163,8 @@ const Navbar = () => {
   // Validacion de usuarios
 
   return (
-    <div>
-      <div className="bg-primary_color justify-around items-center py-1 sm:flex hidden">
+    <div className="bg-primary_color sticky top-0 w-full z-50 shadow-lg">
+      <div className="justify-around items-center py-1 sm:flex hidden">
         <div>
           <span className="text-white  text-sm text-ellipsis">
             Haga sus pedidos en linea o llámanos:
@@ -185,7 +185,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="flex justify-center gap-[10%] items-center my-7">
+      <div className="flex justify-center gap-[10%] items-center ">
         <div className="flex sm:hidden items-center justify-start">
           <div className="group flex h-20 w-20 cursor-pointer items-center justify-center rounded-3xl bg-white p-2 hover:bg-slate-200">
             <div className="space-y-2">
@@ -269,7 +269,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex items-center gap-8">
-          <GoHeart className="text-3xl sm:flex hidden cursor-pointer" />
+          <GoHeart className="text-3xl sm:flex hidden text-gray-300 font-medium cursor-pointer" />
           {user || dataSinIn ? (
             <div className="flex cursor-pointer flex-col group justify-center items-center">
               <img
@@ -277,7 +277,7 @@ const Navbar = () => {
                 src={user?.photoURL ? user?.photoURL : dataSinIn.imageUrl}
                 alt=""
               />
-              <span className="text-colo_text">
+              <span className="text-secondary_color">
                 {user?.displayName ? user?.displayName : dataSinIn.nombre}
               </span>
               <button
@@ -290,7 +290,7 @@ const Navbar = () => {
           ) : (
             <FaUserAlt
               onClick={handleOpenSingIn}
-              className="text-2xl sm:flex hidden cursor-pointer"
+              className="text-2xl sm:flex hidden font-medium text-gray-300 cursor-pointer"
             />
           )}
 
@@ -403,28 +403,45 @@ const Navbar = () => {
             variant="gradient"
             className=" flex flex-col gap-1 items-center justify-center cursor-pointer"
           >
-            <CiShoppingCart className="text-3xl " />
+            <CiShoppingCart className="text-3xl font-medium text-gray-300" />
             <Cart handleOpenCart={handleOpenCart} openCart={openCart} />
-            <span className="sm:flex hidden text-primary_color font-semibold">
+            <span className="sm:flex hidden text-secondary_color font-semibold">
               $ {totalPrice === 0 ? "0.00" : totalPrice}
             </span>
           </div>
         </div>
       </div>
 
-      <div className="md:flex hidden bg-secondary_color text-white py-5">
-        <ul className="flex w-full font-semibold justify-center gap-20">
-          <Link to={"/artesanos"} className={`flex ${location.pathname === `/${"artesanos"}` ? "bg-colo_text text-secondary_color" : "" } text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer`}>
-            <LiaPersonBoothSolid className="text-xl"/> ARTESANOS
+      <div className="flex justify-center md:flex text-white">
+        <ul className="flex bg-secondary_color rounded-lg px-8 py-4 font-semibold justify-center gap-20">
+          <Link
+            to={"/artesanos"}
+            className={`flex ${
+              location.pathname === `/${"artesanos"}`
+                ? "bg-colo_text text-secondary_color"
+                : ""
+            } text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer`}
+          >
+            <LiaPersonBoothSolid className="text-xl" /> ARTESANOS
           </Link>
-          <li className={`flex ${location.pathname === `/${"colecciones"}` ? "bg-colo_text text-secondary_color" : ""} text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-colo_text hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer`}>
+          <li
+            className={`flex ${
+              location.pathname === `/${"colecciones"}`
+                ? "bg-colo_text text-secondary_color"
+                : ""
+            } text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-colo_text hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer`}
+          >
             <CiMenuFries /> COLECCIONES
           </li>
 
           {navigationPages.map((item) => (
             <li
               onClick={() => navigatePages(item.href)}
-              className={`flex ${location.pathname === `/${item.href}` ? "bg-colo_text text-secondary_color" : ""} text-colo_text text-sm px-4 py-2 font-semibold rounded hover:bg-colo_text hover:text-secondary_color  hover:font-medium transition-all duration-300 justify-center items-center gap-4 cursor-pointer`}
+              className={`flex ${
+                location.pathname === `/${item.href}`
+                  ? "bg-colo_text text-secondary_color"
+                  : ""
+              } text-colo_text text-sm px-4 py-2 font-semibold rounded hover:bg-colo_text hover:text-secondary_color  hover:font-medium transition-all duration-300 justify-center items-center gap-4 cursor-pointer`}
               key={item.id}
             >
               {item.page}
