@@ -28,7 +28,7 @@ import { useAuth } from "../../zustand/authUsers";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { Select, Option } from "@material-tailwind/react";
+import { LiaPersonBoothSolid } from "react-icons/lia";
 
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
@@ -99,7 +99,7 @@ const Navbar = () => {
     {
       id: 4,
       page: "CONTACTO",
-      href: "",
+      href: "contact",
       icon: <MdOutlineArrowDropDown />,
     },
   ];
@@ -415,15 +415,19 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="sm:flex hidden bg-secondary_color text-white py-5">
-        <ul className="flex w-screen font-semibold justify-center gap-[9.5%]">
-          <li className="flex text-colo_text text-sm font-light  hover:font-medium transition-all duration-500 justify-center items-center gap-4 cursor-pointer">
+      <div className="md:flex hidden bg-secondary_color text-white py-5">
+        <ul className="flex w-full font-semibold justify-center gap-20">
+          <li className="flex text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer">
+            <LiaPersonBoothSolid className="text-xl"/> ARTESANOS
+          </li>
+          <li className="flex text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer">
             <CiMenuFries /> COLECCIONES
           </li>
+
           {navigationPages.map((item) => (
             <li
               onClick={() => navigatePages(item.href)}
-              className="flex text-colo_text text-sm font-light  hover:font-medium transition-all duration-500 justify-center items-center gap-4 cursor-pointer"
+              className="flex text-colo_text text-sm px-4 py-2 font-semibold rounded hover:bg-primary_color hover:text-secondary_color  hover:font-medium transition-all duration-300 justify-center items-center gap-4 cursor-pointer"
               key={item.id}
             >
               {item.page}
