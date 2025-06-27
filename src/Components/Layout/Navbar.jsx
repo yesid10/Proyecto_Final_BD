@@ -78,7 +78,7 @@ const Navbar = () => {
     {
       id: 1,
       page: "HOME",
-      href: "/",
+      href: "home",
       icon: <MdOutlineArrowDropDown />,
     },
     {
@@ -417,7 +417,7 @@ const Navbar = () => {
           <Link to={"/artesanos"} className={`flex ${location.pathname === `/${"artesanos"}` ? "bg-colo_text text-secondary_color" : "" } text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer`}>
             <LiaPersonBoothSolid className="text-xl"/> ARTESANOS
           </Link>
-          <li className={`flex ${location.pathname === `/${"colecciones"}` ? "bg-colo_text text-secondary_color" : ""} text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer`}>
+          <li className={`flex ${location.pathname === `/${"colecciones"}` ? "bg-colo_text text-secondary_color" : ""} text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-colo_text hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer`}>
             <CiMenuFries /> COLECCIONES
           </li>
 

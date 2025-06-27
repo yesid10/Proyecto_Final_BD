@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Artesanos = ({
   imagePosition = "left",
@@ -6,6 +7,7 @@ const Artesanos = ({
   description,
   buttonText,
   imageUrl,
+  irMapa
 }) => {
   const isImageLeft = imagePosition === "left";
 
@@ -31,9 +33,9 @@ const Artesanos = ({
         <p className="text-colo_text">
           {description}
         </p>
-        <button className="text-secondary_color bg-primary_color rounded-full py-4 px-5 font-medium hover:font-semibold transition-all duration-500 hover:opacity-90">
+        <Link to={`${irMapa ?  "/contact#mapa" : "/artesanos"}`} className="text-secondary_color bg-primary_color rounded-full py-4 px-5 font-medium hover:font-semibold transition-all duration-500 hover:opacity-90">
           {buttonText}
-        </button>
+        </Link>
       </div>
     </div>
   );

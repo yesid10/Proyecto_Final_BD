@@ -184,7 +184,8 @@ const Home = () => {
         title="Visita nuestra tienda de artesanías en Cucaita"
         buttonText="¿ Donde estamos ubicados ?"
         description="Artesanías de Cucaita es una tienda dedicada a resaltar la riqueza cultural y la tradición artesanal de Cucaita, Boyacá. Aquí encontrarás una cuidada selección de productos únicos elaborados a mano por talentosos artesanos locales, quienes combinan técnicas ancestrales con diseños contemporáneos. "
-        imageUrl="https://scontent.fbaq9-1.fna.fbcdn.net/v/t1.6435-9/106558990_3086946791341274_1845844166207932467_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=0b6b33&_nc_ohc=RjBk59SJOOEQ7kNvgF9nwFk&_nc_zt=23&_nc_ht=scontent.fbaq9-1.fna&_nc_gid=AkzHOYO-klnycOpFlGuXWsw&oh=00_AYDXTrliX3hg_i0hAUn3bTRUYa6fnGNhYiv-Q6nx-Ot_6w&oe=67643E12"
+        irMapa={true}
+        imageUrl="https://images.stockcake.com/public/3/0/f/30f19187-87a7-454e-9053-acd0d3b6bb6a_large/artisans-weaving-textiles-stockcake.jpg"
       />
       <Artesanos
         imagePosition="left"

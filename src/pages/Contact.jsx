@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Card,
   CardHeader,
@@ -19,8 +19,20 @@ import {
   FaLinkedin,
 } from "react-icons/fa";
 import { MdEmail, MdLocationOn, MdAccessTime } from "react-icons/md";
+import { useLocation } from "react-router-dom";
 
 const Contact = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash === "#mapa") {
+      const mapaElement = document.getElementById("#mapa");
+      if (mapaElement) {
+        mapaElement.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Contenido principal */}
@@ -246,7 +258,7 @@ const Contact = () => {
               </Typography>
             </CardHeader>
             <CardBody>
-              <div className="bg-gray-100 h-64 rounded-lg flex items-center justify-center">
+              <div id="mapa" className="bg-gray-100 h-64 rounded-lg flex items-center justify-center">
                 <iframe
                   title="Mapa Cucaita"
                   src="https://www.google.com/maps?q=Cucaita,+Boyac%C3%A1,+Colombia&output=embed"
