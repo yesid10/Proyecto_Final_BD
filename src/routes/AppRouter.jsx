@@ -13,6 +13,7 @@ import AgregarProducto from "../Components/addProductos/AgregarProducto";
 import AccesoDenet from "../Components/accesoDenegado/AccesoDenet";
 import AdminPage from "../Components/admin/AdminPage";
 import Contact from "../pages/Contact";
+import ArtesanosPage from "../pages/ArtesanosPage";
 
 const AppRouter = () => {
   const { setUser, setIsAuthenticated } = useAuth();
@@ -39,6 +40,7 @@ const AppRouter = () => {
           <Route path="/" element={<Home />} />
           <Route path="/productos" element={<Products />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/artesanos" element={<ArtesanosPage/>}/>
           {/* <Route path="/acceso-denegado" element={<AccesoDenet/>}/> */}
 
           {/* Ruta protegida */}

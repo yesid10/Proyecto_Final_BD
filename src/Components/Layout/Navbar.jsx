@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaFacebookF } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa6";
@@ -417,9 +417,9 @@ const Navbar = () => {
 
       <div className="md:flex hidden bg-secondary_color text-white py-5">
         <ul className="flex w-full font-semibold justify-center gap-20">
-          <li className="flex text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer">
+          <Link to={"/artesanos"} className="flex text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer">
             <LiaPersonBoothSolid className="text-xl"/> ARTESANOS
-          </li>
+          </Link>
           <li className="flex text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer">
             <CiMenuFries /> COLECCIONES
           </li>
