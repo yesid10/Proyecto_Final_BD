@@ -33,6 +33,8 @@ import { LiaPersonBoothSolid } from "react-icons/lia";
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
   const [openCart, setOpenCart] = React.useState(false);
+  const [showTopBar, setShowTopBar] = useState(true);
+  const lastScrollY = useRef(0);
   const location = useLocation();
 
   const { totalPrice } = useProduct();
@@ -52,6 +54,19 @@ const Navbar = () => {
   useEffect(() => {
     functionGetUsers("list");
   }, [functionGetUsers]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > lastScrollY.current && window.scrollY > 150) {
+        setShowTopBar(false);
+      } else if (window.scrollY < 80) {
+        setShowTopBar(true);
+      }
+      lastScrollY.current = window.scrollY;
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -163,8 +178,12 @@ const Navbar = () => {
   // Validacion de usuarios
 
   return (
-    <div className="bg-primary_color sticky top-0 w-full z-50 shadow-lg">
-      <div className="justify-around items-center py-1 sm:flex hidden">
+    <div className={`bg-primary_color sticky top-0 w-full z-50 shadow-lg transition-all duration-500 ${!showTopBar ? 'py-1' : 'py-4'}`}>
+      <div
+        className={`justify-around items-center sm:flex  transition-transform duration-500 ease-in-out ${
+          showTopBar ? "translate-y-0 hidden" : "-translate-y-full opacity-0"
+        } bg-primary_color w-full z-50`}
+      >
         <div>
           <span className="text-white  text-sm text-ellipsis">
             Haga sus pedidos en linea o llámanos:
@@ -184,8 +203,7 @@ const Navbar = () => {
           <FaLinkedin className="cursor-pointer" />
         </div>
       </div>
-
-      <div className="flex justify-center gap-[10%] items-center ">
+      <div className={`flex justify-center gap-[10%] items-center transition-all duration-500 ${!showTopBar ? 'hidden' : 'block'}`}>
         <div className="flex sm:hidden items-center justify-start">
           <div className="group flex h-20 w-20 cursor-pointer items-center justify-center rounded-3xl bg-white p-2 hover:bg-slate-200">
             <div className="space-y-2">
