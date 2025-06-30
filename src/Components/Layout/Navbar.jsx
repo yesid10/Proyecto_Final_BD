@@ -414,16 +414,6 @@ const Navbar = () => {
 
       <div className="flex justify-center md:flex text-white">
         <ul className="flex bg-secondary_color rounded-lg px-8 py-4 font-semibold justify-center gap-20">
-          <Link
-            to={"/artesanos"}
-            className={`flex ${
-              location.pathname === `/${"artesanos"}`
-                ? "bg-colo_text text-secondary_color"
-                : ""
-            } text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer`}
-          >
-            <LiaPersonBoothSolid className="text-xl" /> ARTESANOS
-          </Link>
           <li
             className={`flex ${
               location.pathname === `/${"colecciones"}`
@@ -448,6 +438,16 @@ const Navbar = () => {
               {item.icon}
             </li>
           ))}
+          <Link
+            to={"/artesanos"}
+            className={`flex ${
+              location.pathname === `/${"artesanos"}`
+                ? "bg-colo_text text-secondary_color"
+                : ""
+            } text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer`}
+          >
+            <LiaPersonBoothSolid className="text-xl" /> ARTESANOS
+          </Link>
         </ul>
       </div>
     </div>

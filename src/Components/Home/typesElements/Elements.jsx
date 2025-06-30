@@ -95,21 +95,34 @@ const Elements = () => {
           ))}
         </div>
       </div>
-      <div className="flex mt-5 w-full items-center gap-10">
-        <div className="flex cursor-pointer">
-          <img className="min-w-64 min-h-64 rounded-lg  transition-all duration-500" src={limitedProducts[0]?.imagen_url} alt="" />
-        </div>
-        {
-          limitedProducts?.map((product) => (
-            <div key={product.productoId} className=" hover:scale-105  transition-all duration-500 flex justify-center items-center flex-col px-5 cursor-pointer border py-5">
-              <img src={product.imagen_url} alt={product.nombre} className="flex h-full w-full hover:scale-110 rounded-3xl transition-all duration-500" />
-              <div className="flex flex-col gap-.5 mt-3">
-                <span className="font-light text-colo_text">{product.nombre}</span>
-                <span className="font-medium text-titles_color">${product.precio}</span>
-              </div>
+      <div className="flex mt-5 w-full justify-center items-center gap-10">
+        {/* Primera imagen sola, más grande y sin información */}
+        {limitedProducts[0] && (
+          <div className="flex items-center justify-center">
+            <img
+              className="w-64 h-72 rounded-lg object-cover shadow-lg transition-all duration-500"
+              src={limitedProducts[0].imagen_url}
+              alt="Imagen principal"
+            />
+          </div>
+        )}
+        {/* Las siguientes tres cards con información */}
+        {limitedProducts.slice(1).map((product) => (
+          <div
+            key={product.productoId}
+            className="hover:scale-105 transition-all duration-500 flex justify-center items-center flex-col px-5 cursor-pointer rounded-lg border py-5 min-w-[15rem] min-h-[18rem]"
+          >
+            <img
+              src={product.imagen_url}
+              alt={product.nombre}
+              className="object-cover rounded-sm transition-all duration-500 w-40 h-40 hover:scale-110"
+            />
+            <div className="flex w-full flex-col gap-1 mt-3">
+              <span className="font-light text-colo_text">{product.nombre}</span>
+              <span className="font-medium text-titles_color">${product.precio}</span>
             </div>
-          ))
-        }
+          </div>
+        ))}
       </div>
     </div>
   );

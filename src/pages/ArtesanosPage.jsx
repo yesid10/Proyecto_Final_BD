@@ -55,7 +55,7 @@ const ArtesanosPage = () => {
   return (
     <div className="flex justify-evenly flex-wrap">
       {arrArtesanos?.map((artesano) => (
-        <div className="flex cursor-pointer flex-col bg-white shadow-sm border border-slate-200 rounded-lg my-6 w-96">
+        <div key={artesano.id} className="flex cursor-pointer flex-col bg-white shadow-sm border border-slate-200 rounded-lg my-6 w-96">
           <div className="m-2.5 overflow-hidden rounded-md h-80 flex justify-center items-center">
             <img
               className="w-full h-full object-cover hover:scale-110 transition-all duration-200"
