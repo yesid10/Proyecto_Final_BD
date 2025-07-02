@@ -217,8 +217,8 @@ const Navbar = () => {
       </div>
       <div className={`flex justify-center gap-[10%] items-center transition-all duration-500 ${!showTopBar ? 'hidden' : 'block'}`}>
         <div className="flex sm:hidden items-center justify-start">
-          <div className="group flex h-20 w-20 cursor-pointer items-center justify-center rounded-3xl bg-white p-2 hover:bg-slate-200">
-            <div className="space-y-2">
+          <div className="group flex h-12 w-12 py-3 px-3 cursor-pointer items-center justify-center rounded bg-white hover:bg-slate-200">
+            <div className="space-y-1.5">
               <span className="block h-1 w-10 origin-center rounded-full bg-primary_color transition-transform ease-in-out group-hover:translate-y-1.5 group-hover:rotate-45"></span>
               <span className="block h-1 w-8 origin-center rounded-full bg-primary_color transition-transform ease-in-out group-hover:w-10 group-hover:-translate-y-1.5 group-hover:-rotate-45"></span>
               <span className="block h-1 w-6 origin-center rounded-full bg-primary_color transition-transform ease-in-out group-hover:hidden"></span>
@@ -442,13 +442,13 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="flex justify-center md:flex text-white">
-        <ul className="flex bg-secondary_color rounded-lg px-8 py-4 font-semibold justify-center gap-20">
+      <div className="hidden sm:flex justify-center text-white">
+        <ul className="flex flex-wrap transition-all duration-300 bg-secondary_color rounded-lg px-8 py-4 font-semibold justify-center gap-14 sm:gap-5">
 
           {navigationPages.map((item) => (
             <li
               onClick={() => navigatePages(item.href)}
-              className={`flex ${
+              className={`flex ${ 
                 location.pathname === `/${item.href}`
                   ? "bg-colo_text text-secondary_color"
                   : ""

@@ -12,6 +12,8 @@ const DetailCart = () => {
     clearCart,
   } = useProduct();
 
+  console.log("Informacion del carrito", cart)
+
   return (
     <div className="my-10 mb-20">
       <div className="flex w-2/12  justify-center items-center mx-[15%] text-[150%] py-5 my-5 rounded-xl text-colo_text border-2 cursor-pointer">

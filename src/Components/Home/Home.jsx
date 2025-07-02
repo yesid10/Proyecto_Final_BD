@@ -159,13 +159,13 @@ const Home = () => {
 
       {/*Componente de tipo de elemento tecnologico */}
 
-      <div className=" flex mt-5 mb-5 pt-5 pb-5 w-9/12 rounded-lg gap-[11%] hover:drop-shadow-xl transition-all duration-300 justify-center flex-wrap bg-gray-200">
+      <div className=" flex my-5 pt-5 pb-5 w-9/12 rounded-lg gap-[11%] hover:drop-shadow-xl transition-all duration-300 justify-center flex-wrap bg-gray-200">
         {categoriesWithIcons.map((element) => (
           <div
             onClick={() => handleCategoryChange(element.nombre)}
             key={element.categoriaId}
             className={`${selectedCategory === element.nombre ? "opacity-100" : "opacity-50"
-              } transition-all duration-500  flex flex-col items-center cursor-pointer`}
+              } transition-all duration-500  flex flex-col my-3 items-center cursor-pointer`}
           >
             <div className="flex items-center flex-col">
               <span>{element.icono}</span>

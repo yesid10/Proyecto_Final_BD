@@ -78,7 +78,7 @@ const Elements = () => {
   //   }
   // ]
   return (
-    <div className="transform animate-slide-in-right flex flex-col w-9/12 mb-10">
+    <div className="transform animate-slide-in-right flex flex-wrap flex-col w-9/12 mb-10">
       <div className="flex w-full justify-between border py-4 px-4 border-t-primary_color">
         <div className="flex gap-3 items-center justify-center border-l">
           <GiPoncho className="text-2xl" />
