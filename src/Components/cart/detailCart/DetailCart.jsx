@@ -12,7 +12,29 @@ const DetailCart = () => {
     clearCart,
   } = useProduct();
 
-  console.log("Informacion del carrito", cart)
+  console.log("Carrito: ", cart);
+
+  const handlerSendWhatsApp = () => {
+    const numeroWhatsApp = "573125642753";
+    const dominio = "http://localhost:5173";
+    let mensaje =
+      "Hola Manos de Historia, quiero realizar una compra con los siguientes productos: \n";
+    const productos = cart.forEach((item) => {
+      mensaje += `-Producto: ${item.nombre}\n-Cantidad: ${
+        item.quantity
+      }\n-Precio: $${item.precio}\n${encodeURI(item.imagen_url)}\n\n`;
+    });
+    mensaje += `Total: $${totalPrice + 15000} (incluye envío)\n`;
+
+    //Codificar el mensaje para la URL
+    const mensajeCodificado = encodeURIComponent(mensaje);
+
+    //Se arma la URL de WhatsApp
+    const url = `https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`;
+
+    //Se redirige al usuario a otra pestania
+    window.open(url, "_blank");
+  };
 
   return (
     <div className="my-10 mb-20">
@@ -89,7 +111,12 @@ const DetailCart = () => {
               <span>$ {totalPrice + 15000}</span>
             </div>
           </div>
-          <button className="bg-primary_color text-gray-300 text-lg hover:scale-95 transition-all duration-500 font-medium py-3 mt-7 rounded-lg">Finalizar compra</button>
+          <button
+            onClick={handlerSendWhatsApp}
+            className="bg-primary_color text-gray-300 text-lg hover:scale-95 transition-all duration-500 font-medium py-3 mt-7 rounded-lg"
+          >
+            Finalizar compra
+          </button>
         </div>
       </div>
     </div>

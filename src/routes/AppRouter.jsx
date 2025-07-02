@@ -41,16 +41,16 @@ const AppRouter = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/productos" element={<Products />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/artesanos" element={<ArtesanosPage/>}/>
-          <Route path="/nosotros" element={<AboutPage/>}/>
+          <Route path="/artesanos" element={<ArtesanosPage />} />
+          <Route path="/nosotros" element={<AboutPage />} />
+          <Route
+            path="/detalles-producto/:producto"
+            element={<DetailProduct />}
+          />
           {/* <Route path="/acceso-denegado" element={<AccesoDenet/>}/> */}
 
           {/* Ruta protegida */}
           <Route element={<RutaPortegida />}>
-            <Route
-              path="/detalles-producto/:producto"
-              element={<DetailProduct />}
-            />
             <Route path="/carrito" element={<DetailCart />} />
             <Route path="/add-product" element={<AgregarProducto />} />
           </Route>

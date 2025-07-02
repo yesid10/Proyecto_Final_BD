@@ -3,11 +3,19 @@ import { useProduct } from "../../../zustand/useProducts";
 
 import Swal from "sweetalert2";
 import CounterCart from "../../cart/counter/CounterCart";
+import { useLocation } from "react-router-dom";
 
 const DetailProduct = () => {
+  const location = useLocation();
+
   const { productSelected, addCart, cantidadComprar } = useProduct();
   const { productoId, description, imagen_url, nombre, precio, stock } =
     productSelected;
+
+  const productComplete = {
+    ...productSelected,
+    url: location.pathname,
+  };
 
   const [position, setPosition] = useState({ x: "50%", y: "50%" });
   const [isZoomed, setIsZoomed] = useState(false);
@@ -58,15 +66,15 @@ const DetailProduct = () => {
 
         <div className="flex w-full justify-start gap-[10%]">
           <button
-            disabled={ cantidadComprar > stock ? true : false}
-            onClick={() => addCart(productSelected, cantidadComprar)}
+            disabled={cantidadComprar > stock ? true : false}
+            onClick={() => addCart(productComplete, cantidadComprar)}
             className={`bg-primary_color text-gray-200 opacity-${
               productSelected.stock > 0 ? "100" : "30"
             } hover:font-medium transition-all ease-in-out duration-300 text-lg rounded-lg w-3/4 px-4 py-5 text-center`}
           >
             Agregar al carrito
           </button>
-          <CounterCart/>
+          <CounterCart />
         </div>
       </div>
     </div>
