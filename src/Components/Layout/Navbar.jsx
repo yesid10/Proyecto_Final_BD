@@ -92,28 +92,40 @@ const Navbar = () => {
   const navigationPages = [
     {
       id: 1,
-      page: "HOME",
+      page: "Home",
       href: "home",
       icon: <MdOutlineArrowDropDown />,
     },
     {
       id: 2,
-      page: "PRODUCTOS",
+      page: "Productos",
       href: "productos",
       icon: <MdOutlineArrowDropDown />,
     },
     {
       id: 3,
-      page: "CARRITO",
+      page: "Carrito",
       href: "carrito",
       icon: <MdOutlineArrowDropDown />,
     },
     {
       id: 4,
-      page: "CONTACTO",
+      page: "Contáctenos",
       href: "contact",
       icon: <MdOutlineArrowDropDown />,
     },
+    {
+      id: 5,
+      page: "Nosotros",
+      href: "nosotros",
+      icon: <MdOutlineArrowDropDown />,
+    },
+    {
+      id: 6,
+      page: "Artesanos",
+      href: "artesanos",
+      icon: <LiaPersonBoothSolid className="text-xl" />,
+    }
   ];
 
   //Validación de formularios
@@ -432,15 +444,6 @@ const Navbar = () => {
 
       <div className="flex justify-center md:flex text-white">
         <ul className="flex bg-secondary_color rounded-lg px-8 py-4 font-semibold justify-center gap-20">
-          <li
-            className={`flex ${
-              location.pathname === `/${"colecciones"}`
-                ? "bg-colo_text text-secondary_color"
-                : ""
-            } text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-colo_text hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer`}
-          >
-            <CiMenuFries /> COLECCIONES
-          </li>
 
           {navigationPages.map((item) => (
             <li
@@ -456,16 +459,7 @@ const Navbar = () => {
               {item.icon}
             </li>
           ))}
-          <Link
-            to={"/artesanos"}
-            className={`flex ${
-              location.pathname === `/${"artesanos"}`
-                ? "bg-colo_text text-secondary_color"
-                : ""
-            } text-colo_text text-sm font-semibold px-4 py-2 hover:font-medium rounded hover:bg-primary_color hover:text-secondary_color transition-all duration-500 justify-center items-center gap-4 cursor-pointer`}
-          >
-            <LiaPersonBoothSolid className="text-xl" /> ARTESANOS
-          </Link>
+          
         </ul>
       </div>
     </div>
