@@ -30,7 +30,6 @@ const FinalizarCompra = () => {
     removeFromCart,
     clearCart,
   } = useProduct();
-  console.log(cart);
 
   const {
     register,
@@ -63,7 +62,7 @@ const FinalizarCompra = () => {
 
   return (
     <div className="flex flex-wrap py-20 gap-6 w-full justify-center">
-      <form className="max-w-3/5">
+      <form onSubmit={handleSubmit()} className="max-w-3/5">
         <CardBody className="flex flex-col gap-4">
           <Typography variant="h2" color="blue-gray">
             Finalizar Compra
@@ -75,8 +74,9 @@ const FinalizarCompra = () => {
           >
             Ingresa la información requerida para que tu pedido no tarde. 👌
           </Typography>
+
+          {/* Nombres y Apellidos */}
           <div className="flex w-full justify-between gap-8">
-            {/* Email */}
             <div className="w-full">
               <Typography className="mb-2" variant="h6">
                 Nombres
@@ -85,22 +85,26 @@ const FinalizarCompra = () => {
                 label="Nombres"
                 type="text"
                 size="lg"
-                {...register("email", {
-                  required: "El correo es obligatorio",
+                {...register("nombres", {
+                  required: "Este campo es obligatorio",
+                  minLength: {
+                    value: 3,
+                    message: "Debe tener al menos 3 caracteres",
+                  },
                   pattern: {
-                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: "Formato de correo inválido",
+                    value: /^[a-zA-ZÀ-ÿ\s]+$/i,
+                    message: "Solo se permiten letras y espacios",
                   },
                 })}
               />
-              {errors.email && (
+              {errors.nombres && (
                 <Typography variant="small" color="red">
-                  {errors.email.message}
+                  {errors.nombres.message}
                 </Typography>
               )}
             </div>
+
             <div className="w-full">
-              {/* Contraseña */}
               <Typography className="mb-2" variant="h6">
                 Apellidos
               </Typography>
@@ -108,117 +112,128 @@ const FinalizarCompra = () => {
                 label="Apellidos"
                 type="text"
                 size="lg"
-                {...register("password", {
-                  required: "La contraseña es obligatoria",
+                {...register("apellidos", {
+                  required: "Este campo es obligatorio",
                   minLength: {
-                    value: 6,
-                    message: "Debe tener al menos 6 caracteres",
+                    value: 3,
+                    message: "Debe tener al menos 3 caracteres",
+                  },
+                  pattern: {
+                    value: /^[a-zA-ZÀ-ÿ\s]+$/i,
+                    message: "Solo se permiten letras y espacios",
                   },
                 })}
               />
-              {errors.password && (
+              {errors.apellidos && (
                 <Typography variant="small" color="red">
-                  {errors.password.message}
+                  {errors.apellidos.message}
                 </Typography>
               )}
             </div>
           </div>
+
+          {/* Dirección y Teléfono */}
           <div className="flex w-full justify-between gap-8">
-            {/* Email */}
             <div className="w-3/4">
               <Typography className="mb-2" variant="h6">
                 Dirección de entrega
               </Typography>
               <Input
                 label="Dirección"
-                placeholder="Calle 5 #6-07 Tunja, Boyacá "
+                placeholder="Calle 5 #6-07 Tunja, Boyacá"
                 type="text"
                 size="lg"
-                {...register("email", {
-                  required: "El correo es obligatorio",
+                {...register("direccion", {
+                  required: "La dirección es obligatoria",
                   pattern: {
-                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: "Formato de correo inválido",
+                    value: /^[a-zA-Z0-9\s#\-.,]{10,100}$/,
+                    message:
+                      "Dirección inválida. Usa letras, números y símbolos comunes como #, -, .",
                   },
                 })}
               />
-              {errors.email && (
+              {errors.direccion && (
                 <Typography variant="small" color="red">
-                  {errors.email.message}
+                  {errors.direccion.message}
                 </Typography>
               )}
             </div>
-            <div className="">
-              {/* Contraseña */}
+
+            <div className="w-full">
               <Typography className="mb-2" variant="h6">
                 Teléfono
               </Typography>
               <Input
                 label="Tel."
-                type="number"
+                type="tel"
                 placeholder="3000000000"
                 size="lg"
-                {...register("password", {
-                  required: "La contraseña es obligatoria",
-                  minLength: {
-                    value: 6,
-                    message: "Debe tener al menos 6 caracteres",
+                {...register("telefono", {
+                  required: "El teléfono es obligatorio",
+                  pattern: {
+                    value: /^[0-9]{10}$/,
+                    message: "Debe tener 10 dígitos numéricos",
                   },
                 })}
               />
-              {errors.password && (
+              {errors.telefono && (
                 <Typography variant="small" color="red">
-                  {errors.password.message}
+                  {errors.telefono.message}
                 </Typography>
               )}
             </div>
           </div>
+
+          {/* Cédula y Correo */}
           <div className="flex w-full justify-between gap-8">
-            {/* Email */}
-            <div className="">
+            <div className="w-full">
               <Typography className="mb-2" variant="h6">
                 Cédula
               </Typography>
               <Input
-                label="Numero de Cédula"
+                label="Número de Cédula"
                 placeholder="1000000000"
                 type="number"
                 size="lg"
-                {...register("email", {
-                  required: "El correo es obligatorio",
-                  pattern: {
-                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: "Formato de correo inválido",
+                {...register("cedula", {
+                  required: "La cédula es obligatoria",
+                  minLength: {
+                    value: 6,
+                    message: "Debe tener al menos 6 dígitos",
+                  },
+                  maxLength: {
+                    value: 11,
+                    message: "No debe superar los 11 dígitos",
                   },
                 })}
               />
-              {errors.email && (
+              {errors.cedula && (
                 <Typography variant="small" color="red">
-                  {errors.email.message}
+                  {errors.cedula.message}
                 </Typography>
               )}
             </div>
+
             <div className="w-3/4">
-              {/* Contraseña */}
               <Typography className="mb-2" variant="h6">
-                Correo de Contacto
+                Correo de contacto
               </Typography>
               <Input
                 label="Email"
                 type="email"
                 placeholder="ejemplo@ejemplo.com"
                 size="lg"
-                {...register("password", {
-                  required: "La contraseña es obligatoria",
-                  minLength: {
-                    value: 6,
-                    message: "Debe tener al menos 6 caracteres",
+                {...register("email", {
+                  required: "El correo es obligatorio",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Formato de correo inválido",
                   },
                 })}
               />
-              {errors.password && (
+              {errors.email && (
                 <Typography variant="small" color="red">
-                  {errors.password.message}
+                  {errors.email.message}
                 </Typography>
               )}
             </div>
@@ -226,12 +241,12 @@ const FinalizarCompra = () => {
         </CardBody>
 
         <CardFooter className="pt-0">
-          {/* Submit */}
-          <Button variant="gradient" fullWidth type="submit" onClick={handlerSendWhatsApp}>
+          <Button variant="gradient" fullWidth type="submit">
             Ir a pagar
           </Button>
         </CardFooter>
       </form>
+
       <Card className="h-full shadow-lg">
         <CardHeader floated={false} className="bg-titles_color p-4">
           <Typography variant="h5" color="white">
