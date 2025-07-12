@@ -39,9 +39,31 @@ const FinalizarCompra = () => {
     reset,
   } = useForm();
 
+  const handlerSendWhatsApp = () => {
+    const numeroWhatsApp = "573125642753";
+    const dominio = "http://localhost:5173";
+    let mensaje =
+      "Hola Manos de Historia, quiero realizar una compra con los siguientes productos: \n";
+    const productos = cart.forEach((item) => {
+      mensaje += `-Producto: ${item.nombre}\n-Cantidad: ${
+        item.quantity
+      }\n-Precio: $${item.precio}\n${encodeURI(item.imagen_url)}\n\n`;
+    });
+    mensaje += `Total: $${totalPrice + 15000} (incluye envío)\n`;
+
+    //Codificar el mensaje para la URL
+    const mensajeCodificado = encodeURIComponent(mensaje);
+
+    //Se arma la URL de WhatsApp
+    const url = `https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`;
+
+    //Se redirige al usuario a otra pestania
+    window.open(url, "_blank");
+  };
+
   return (
     <div className="flex flex-wrap py-20 gap-6 w-full justify-center">
-      <form className="min-w-3/5">
+      <form className="max-w-3/5">
         <CardBody className="flex flex-col gap-4">
           <Typography variant="h2" color="blue-gray">
             Finalizar Compra
@@ -205,7 +227,7 @@ const FinalizarCompra = () => {
 
         <CardFooter className="pt-0">
           {/* Submit */}
-          <Button variant="gradient" fullWidth type="submit">
+          <Button variant="gradient" fullWidth type="submit" onClick={handlerSendWhatsApp}>
             Ir a pagar
           </Button>
         </CardFooter>

@@ -13,30 +13,7 @@ const DetailCart = () => {
     clearCart,
   } = useProduct();
 
-  console.log("Carrito: ", cart);
-
-  const handlerSendWhatsApp = () => {
-    const numeroWhatsApp = "573125642753";
-    const dominio = "http://localhost:5173";
-    let mensaje =
-      "Hola Manos de Historia, quiero realizar una compra con los siguientes productos: \n";
-    const productos = cart.forEach((item) => {
-      mensaje += `-Producto: ${item.nombre}\n-Cantidad: ${
-        item.quantity
-      }\n-Precio: $${item.precio}\n${encodeURI(item.imagen_url)}\n\n`;
-    });
-    mensaje += `Total: $${totalPrice + 15000} (incluye envío)\n`;
-
-    //Codificar el mensaje para la URL
-    const mensajeCodificado = encodeURIComponent(mensaje);
-
-    //Se arma la URL de WhatsApp
-    const url = `https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`;
-
-    //Se redirige al usuario a otra pestania
-    window.open(url, "_blank");
-  };
-
+  
   return (
     <div className="my-10 mb-20">
       <div className="flex w-2/12  justify-center items-center mx-[15%] text-[150%] py-5 my-5 rounded-xl text-colo_text border-2 cursor-pointer">
