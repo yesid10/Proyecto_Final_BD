@@ -6,7 +6,7 @@ const LogoPage = () => {
     const navigate = useNavigate();
 
     const handleNavigateHome = () => {
-        navigate("/home");
+        navigate("/");
       };
   return (
     <>

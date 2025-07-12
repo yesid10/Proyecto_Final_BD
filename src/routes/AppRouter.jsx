@@ -38,7 +38,7 @@ const AppRouter = () => {
       <Routes>
         <Route element={<LayoutComponent />}>
           {/* Ruta pública */}
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/productos" element={<Products />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/artesanos" element={<ArtesanosPage />} />

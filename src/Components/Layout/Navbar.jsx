@@ -56,17 +56,33 @@ const Navbar = () => {
   }, [functionGetUsers]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > lastScrollY.current && window.scrollY > 150) {
-        setShowTopBar(false);
-      } else if (window.scrollY < 80) {
-        setShowTopBar(true);
-      }
-      lastScrollY.current = window.scrollY;
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const handleScroll = () => {
+    const currentScroll = window.scrollY;
+    const isScrollingDown = currentScroll > lastScrollY.current;
+
+    if (isScrollingDown && currentScroll > 160 && showTopBar) {
+      setShowTopBar(false);
+    } else if (!isScrollingDown && currentScroll < 70 && !showTopBar) {
+      setShowTopBar(true);
+    }
+
+    lastScrollY.current = currentScroll;
+  };
+
+  let ticking = false;
+  const onScroll = () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        handleScroll();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  };
+
+  window.addEventListener("scroll", onScroll);
+  return () => window.removeEventListener("scroll", onScroll);
+}, [showTopBar]);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -93,7 +109,7 @@ const Navbar = () => {
     {
       id: 1,
       page: "Home",
-      href: "home",
+      href: "",
       icon: <MdOutlineArrowDropDown />,
     },
     {
@@ -125,7 +141,7 @@ const Navbar = () => {
       page: "Artesanos",
       href: "artesanos",
       icon: <LiaPersonBoothSolid className="text-xl" />,
-    }
+    },
   ];
 
   //Validación de formularios
@@ -165,7 +181,7 @@ const Navbar = () => {
     reset();
   };
 
-  const [selectedRegion, setSelectedRegion] = useState("Europe");
+  const [selectedRegion, setSelectedRegion] = useState("Ruana");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -190,7 +206,11 @@ const Navbar = () => {
   // Validacion de usuarios
 
   return (
-    <div className={`bg-primary_color sticky top-0 w-full z-50 shadow-lg transition-all duration-500 ${!showTopBar ? 'py-1' : 'py-4'}`}>
+    <div
+      className={`bg-primary_color sticky top-0 w-full z-50 shadow-lg transition-all duration-500 ${
+        !showTopBar ? "py-1" : "pb-2"
+      }`}
+    >
       <div
         className={`justify-around items-center sm:flex  transition-transform duration-500 ease-in-out ${
           showTopBar ? "translate-y-0 hidden" : "-translate-y-full opacity-0"
@@ -215,7 +235,11 @@ const Navbar = () => {
           <FaLinkedin className="cursor-pointer" />
         </div>
       </div>
-      <div className={`flex justify-center gap-[10%] items-center transition-all duration-500 ${!showTopBar ? 'hidden' : 'block'}`}>
+      <div
+        className={`flex justify-center gap-[30%] items-center transition-all duration-500 ${
+          !showTopBar ? "hidden" : "block"
+        }`}
+      >
         <div className="flex sm:hidden items-center justify-start">
           <div className="group flex h-12 w-12 py-3 px-3 cursor-pointer items-center justify-center rounded bg-white hover:bg-slate-200">
             <div className="space-y-1.5">
@@ -228,14 +252,14 @@ const Navbar = () => {
 
         <div className="sm:flex hidden items-center  gap-[8%] ">
           <LogoPage />
-          <div className="w-full max-w-sm min-w-[200px]">
+          <div className="w-full max-w-sm">
             <div className="relative mt-2" ref={dropdownRef}>
               <div className="absolute top-1 left-1 flex items-center">
                 <button
                   onClick={toggleDropdown}
                   className="rounded border border-transparent py-1 px-1.5 text-center flex items-center text-sm transition-all text-slate-600"
                 >
-                  <span className="text-ellipsis overflow-hidden">
+                  <span className="text-secondary_color overflow-hidden">
                     {selectedRegion}
                   </span>
                   <svg
@@ -247,6 +271,7 @@ const Navbar = () => {
                     className="h-4 w-4 ml-1"
                   >
                     <path
+                      className="text-secondary_color"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       d="m19.5 8.25-7.5 7.5-7.5-7.5"
@@ -258,7 +283,7 @@ const Navbar = () => {
                 {isOpen && (
                   <div className="min-w-[150px] overflow-hidden absolute left-0 w-full mt-10 bg-white border border-slate-200 rounded-md shadow-lg z-10">
                     <ul>
-                      {["Europe", "Australia", "Africa"].map((region) => (
+                      {["Ruana", "Zapatos", "Bufandas"].map((region) => (
                         <li
                           key={region}
                           className="px-4 py-2 text-slate-600 hover:bg-slate-50 text-sm cursor-pointer"
@@ -274,8 +299,8 @@ const Navbar = () => {
 
               <input
                 type="text"
-                placeholder="Germany..."
-                className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pr-12 pl-28 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                placeholder="Ruana..."
+                className="w-full bg-transparent focus:text-secondary_color placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pr-12 pl-28 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
               />
 
               <button
@@ -443,23 +468,27 @@ const Navbar = () => {
       </div>
 
       <div className="hidden sm:flex justify-center text-white">
-        <ul className="flex flex-wrap transition-all duration-300 bg-secondary_color rounded-lg px-8 py-4 font-semibold justify-center gap-14 sm:gap-5">
-
+        <ul
+          className={`flex flex-wrap transition-all duration-300 bg-secondary_color rounded-lg px-8 ${
+            !showTopBar ? "py-1" : " py-2"
+          }  font-semibold justify-center gap-14 sm:gap-5`}
+        >
           {navigationPages.map((item) => (
             <li
               onClick={() => navigatePages(item.href)}
-              className={`flex ${ 
+              className={`flex ${
                 location.pathname === `/${item.href}`
                   ? "bg-colo_text text-secondary_color"
                   : ""
-              } text-colo_text text-sm px-4 py-2 font-semibold rounded hover:bg-colo_text hover:text-secondary_color  hover:font-medium transition-all duration-300 justify-center items-center gap-4 cursor-pointer`}
+              } ${
+                !showTopBar ? "py-1" : "py-2"
+              } text-colo_text text-sm px-4 font-semibold rounded hover:bg-colo_text hover:text-secondary_color  hover:font-medium transition-all duration-300 justify-center items-center gap-4 cursor-pointer`}
               key={item.id}
             >
               {item.page}
               {item.icon}
             </li>
           ))}
-          
         </ul>
       </div>
     </div>
