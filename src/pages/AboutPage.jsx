@@ -18,6 +18,7 @@ import {
   FaStar,
   FaArrowRight,
 } from "react-icons/fa";
+import BtnVolver from "../Components/Botones/BtnVolver";
 
 const values = [
   {
@@ -106,6 +107,8 @@ const team = [
 
 const AboutPage = () => {
   return (
+    <>
+    <BtnVolver/>
     <div className="min-h-screen bg-gradient-to-br from-primary_color to-primary_color">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-emerald-600 to-emerald-700 text-secondabg-secondary_color overflow-hidden">
@@ -361,6 +364,8 @@ const AboutPage = () => {
         </div>
       </section>
     </div>
+    </>
+    
   );
 };
 

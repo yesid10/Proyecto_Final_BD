@@ -5,6 +5,7 @@ import { useAuth } from "../../zustand/authUsers.js";
 import { MdDelete } from "react-icons/md";
 import { BiEditAlt } from "react-icons/bi";
 import { useStore } from "zustand";
+import BtnVolver from "../Botones/BtnVolver.jsx";
 
 const Products = () => {
   const {
@@ -13,7 +14,7 @@ const Products = () => {
     setProductSelected,
     functionGetProducts,
     removeFromProducts,
-    setProductToEdit
+    setProductToEdit,
   } = useProduct();
 
   const { dataSinIn } = useAuth();
@@ -24,7 +25,7 @@ const Products = () => {
   };
 
   useEffect(() => {
-    functionGetProducts()
+    functionGetProducts();
     // functionGet("list");
   }, []);
 
@@ -38,20 +39,23 @@ const Products = () => {
 
   return (
     <>
-      {
-        dataSinIn?.rol === "ADMIN" && (
-          <div className="flex my-5 mr-[11%] gap-[8%] justify-end items-center ">
-            <Link
-              to="/add-product"
-              className="px-3 flex items-center rounded-lg text-gray-300 font-medium hover:scale-95 transition-all duration-300 justify-center py-3 bg-primary_color"
-            >
-              Agregar producto
-            </Link>
-            <Link to={"/admin"} className="flex font-medium py-3 px-3 text-gray-300 rounded-xl hover:bg-primary_color hover:scale-95 transition-all duration-500 bg-colo_text">
-              Panel Administrador
-            </Link>
-          </div>
-        )}
+      <BtnVolver />
+      {dataSinIn?.rol === "ADMIN" && (
+        <div className="flex my-5 mr-[11%] gap-[8%] justify-end items-center ">
+          <Link
+            to="/add-product"
+            className="px-3 flex items-center rounded-lg text-gray-300 font-medium hover:scale-95 transition-all duration-300 justify-center py-3 bg-primary_color"
+          >
+            Agregar producto
+          </Link>
+          <Link
+            to={"/admin"}
+            className="flex font-medium py-3 px-3 text-gray-300 rounded-xl hover:bg-primary_color hover:scale-95 transition-all duration-500 bg-colo_text"
+          >
+            Panel Administrador
+          </Link>
+        </div>
+      )}
 
       <div className="bg-secondary_color mt-10">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 sm:py-10 lg:max-w-7xl lg:px-8">
