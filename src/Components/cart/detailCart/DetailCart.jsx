@@ -1,6 +1,7 @@
 import React from "react";
 import { useProduct } from "../../../zustand/useProducts";
 import { IoClose } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const DetailCart = () => {
   const {
@@ -111,12 +112,12 @@ const DetailCart = () => {
               <span>$ {totalPrice + 15000}</span>
             </div>
           </div>
-          <button
-            onClick={handlerSendWhatsApp}
-            className="bg-primary_color text-gray-300 text-lg hover:scale-95 transition-all duration-500 font-medium py-3 mt-7 rounded-lg"
+          <Link
+            to={"/finalizar-compra"}
+            className="bg-primary_color text-center text-gray-300 text-lg hover:scale-95 transition-all duration-500 font-medium py-3 mt-7 rounded-lg"
           >
             Finalizar compra
-          </button>
+          </Link>
         </div>
       </div>
     </div>

@@ -236,7 +236,7 @@ const Navbar = () => {
         </div>
       </div>
       <div
-        className={`flex justify-center gap-[30%] items-center transition-all duration-500 ${
+        className={`flex justify-center gap-[15%] items-center transition-all duration-500 ${
           !showTopBar ? "hidden" : "block"
         }`}
       >

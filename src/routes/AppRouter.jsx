@@ -15,6 +15,7 @@ import AdminPage from "../Components/admin/AdminPage";
 import Contact from "../pages/Contact";
 import ArtesanosPage from "../pages/ArtesanosPage";
 import AboutPage from "../pages/AboutPage";
+import FinalizarCompra from "../pages/FinalizarCompra";
 
 const AppRouter = () => {
   const { setUser, setIsAuthenticated } = useAuth();
@@ -47,14 +48,15 @@ const AppRouter = () => {
             path="/detalles-producto/:producto"
             element={<DetailProduct />}
           />
+          <Route path="finalizar-compra" element={<FinalizarCompra/>}/>
           {/* <Route path="/acceso-denegado" element={<AccesoDenet/>}/> */}
 
           {/* Ruta protegida */}
           <Route element={<RutaPortegida />}>
             <Route path="/carrito" element={<DetailCart />} />
             <Route path="/add-product" element={<AgregarProducto />} />
+            <Route path="/admin" element={<AdminPage />} />
           </Route>
-          <Route path="/admin" element={<AdminPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
