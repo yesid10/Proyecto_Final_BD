@@ -14,14 +14,17 @@ import {
   List,
   ListItem,
   ListItemPrefix,
+  Spinner,
   Typography,
 } from "@material-tailwind/react";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { useProduct } from "../zustand/useProducts";
+import { sendOrder } from "../service/ordersServices";
 
 const FinalizarCompra = () => {
+  const [loading, setLoading] = useState(false);
   const {
     cart,
     totalPrice,
@@ -38,31 +41,47 @@ const FinalizarCompra = () => {
     reset,
   } = useForm();
 
+  const onSubmit = async (data) => {
+    const dataToSend = {
+      ...data,
+      total: totalPrice,
+    };
+    const response = await sendOrder("save", dataToSend);
+    if (response && response.status === 200) {
+      setLoading(false);
+    }
+    return response;
+  };
+
   const handlerSendWhatsApp = () => {
-    const numeroWhatsApp = "573125642753";
-    const dominio = "http://localhost:5173";
-    let mensaje =
-      "Hola Manos de Historia, quiero realizar una compra con los siguientes productos: \n";
-    const productos = cart.forEach((item) => {
-      mensaje += `-Producto: ${item.nombre}\n-Cantidad: ${
-        item.quantity
-      }\n-Precio: $${item.precio}\n${encodeURI(item.imagen_url)}\n\n`;
-    });
-    mensaje += `Total: $${totalPrice + 15000} (incluye envío)\n`;
+    setLoading(true);
 
-    //Codificar el mensaje para la URL
-    const mensajeCodificado = encodeURIComponent(mensaje);
+    if (!loading) {
+      const numeroWhatsApp = "573125642753";
+      const dominio = "http://localhost:5173";
+      let mensaje =
+        "Hola Manos de Historia, quiero realizar una compra con los siguientes productos: \n";
+      const productos = cart.forEach((item) => {
+        mensaje += `-Producto: ${item.nombre}\n-Cantidad: ${
+          item.quantity
+        }\n-Precio: $${item.precio}\n${encodeURI(item.imagen_url)}\n\n`;
+      });
+      mensaje += `Total: $${totalPrice + 15000} (incluye envío)\n`;
 
-    //Se arma la URL de WhatsApp
-    const url = `https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`;
+      //Codificar el mensaje para la URL
+      const mensajeCodificado = encodeURIComponent(mensaje);
 
-    //Se redirige al usuario a otra pestania
-    window.open(url, "_blank");
+      //Se arma la URL de WhatsApp
+      const url = `https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`;
+
+      //Se redirige al usuario a otra pestania
+      window.open(url, "_blank");
+    }
   };
 
   return (
     <div className="flex flex-wrap py-20 gap-6 w-full justify-center">
-      <form onSubmit={handleSubmit()} className="max-w-3/5">
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-3/5">
         <CardBody className="flex flex-col gap-4">
           <Typography variant="h2" color="blue-gray">
             Finalizar Compra
@@ -85,7 +104,7 @@ const FinalizarCompra = () => {
                 label="Nombres"
                 type="text"
                 size="lg"
-                {...register("nombres", {
+                {...register("nombreCliente", {
                   required: "Este campo es obligatorio",
                   minLength: {
                     value: 3,
@@ -97,22 +116,22 @@ const FinalizarCompra = () => {
                   },
                 })}
               />
-              {errors.nombres && (
+              {errors.nombreCliente && (
                 <Typography variant="small" color="red">
-                  {errors.nombres.message}
+                  {errors.nombreCliente.message}
                 </Typography>
               )}
             </div>
 
             <div className="w-full">
-              <Typography className="mb-2" variant="h6">
+              <Typography className="mb-2" variant="hapellidos_cliente">
                 Apellidos
               </Typography>
               <Input
                 label="Apellidos"
                 type="text"
                 size="lg"
-                {...register("apellidos", {
+                {...register("apellidos_cliente", {
                   required: "Este campo es obligatorio",
                   minLength: {
                     value: 3,
@@ -124,9 +143,9 @@ const FinalizarCompra = () => {
                   },
                 })}
               />
-              {errors.apellidos && (
+              {errors.apellidos_cliente && (
                 <Typography variant="small" color="red">
-                  {errors.apellidos.message}
+                  {errors.apellidos_cliente.message}
                 </Typography>
               )}
             </div>
@@ -143,7 +162,7 @@ const FinalizarCompra = () => {
                 placeholder="Calle 5 #6-07 Tunja, Boyacá"
                 type="text"
                 size="lg"
-                {...register("direccion", {
+                {...register("direccionCliente", {
                   required: "La dirección es obligatoria",
                   pattern: {
                     value: /^[a-zA-Z0-9\s#\-.,]{10,100}$/,
@@ -152,9 +171,9 @@ const FinalizarCompra = () => {
                   },
                 })}
               />
-              {errors.direccion && (
+              {errors.direccionCliente && (
                 <Typography variant="small" color="red">
-                  {errors.direccion.message}
+                  {errors.direccionCliente.message}
                 </Typography>
               )}
             </div>
@@ -168,7 +187,7 @@ const FinalizarCompra = () => {
                 type="tel"
                 placeholder="3000000000"
                 size="lg"
-                {...register("telefono", {
+                {...register("telefonoCliente", {
                   required: "El teléfono es obligatorio",
                   pattern: {
                     value: /^[0-9]{10}$/,
@@ -176,9 +195,9 @@ const FinalizarCompra = () => {
                   },
                 })}
               />
-              {errors.telefono && (
+              {errors.telefonoCliente && (
                 <Typography variant="small" color="red">
-                  {errors.telefono.message}
+                  {errors.telefonoCliente.message}
                 </Typography>
               )}
             </div>
@@ -195,7 +214,7 @@ const FinalizarCompra = () => {
                 placeholder="1000000000"
                 type="number"
                 size="lg"
-                {...register("cedula", {
+                {...register("identificacion", {
                   required: "La cédula es obligatoria",
                   minLength: {
                     value: 6,
@@ -207,9 +226,9 @@ const FinalizarCompra = () => {
                   },
                 })}
               />
-              {errors.cedula && (
+              {errors.identificacion && (
                 <Typography variant="small" color="red">
-                  {errors.cedula.message}
+                  {errors.identificacion.message}
                 </Typography>
               )}
             </div>
@@ -241,8 +260,14 @@ const FinalizarCompra = () => {
         </CardBody>
 
         <CardFooter className="pt-0">
-          <Button variant="gradient" fullWidth type="submit">
-            Ir a pagar
+          <Button
+            onClick={handlerSendWhatsApp}
+            className="flex justify-center text-center transition-all duration-200"
+            variant="gradient"
+            fullWidth
+            type="submit"
+          >
+            {loading ? <Spinner /> : "Ir a pagar"}
           </Button>
         </CardFooter>
       </form>
